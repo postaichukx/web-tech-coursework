@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Môj týždenný rozvrh a informácie o tom, kedy mám čas." name="description">
+    <meta content="Pavlo Postaichuk | Rozvrh" property="og:title">
+    <meta content="Môj týždenný rozvrh a informácie o tom, kedy mám čas." property="og:description">
+    <meta content="../img/photo_2026-09-30_14-45-53.jpg" property="og:image">
+    <title>Pavlo Postaichuk | Rozvrh</title>
+    <link href="../img/favicon.svg" rel="icon" type="image/svg">
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Preskočiť na obsah</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="../index.html">
+            <span class="monogram">PP</span>
+            <span><strong>Pavlo Postaichuk</strong><small>Som študent aplikovanej informatiky na FEI STU.</small></span>
+        </a>
+        <button
+                aria-controls="main-navigation"
+                aria-expanded="false"
+                class="menu-toggle"
+                type="button"
+        >
+            ☰ Menu</button>
+        <nav
+                aria-label="Hlavná navigácia"
+                class="main-nav"
+                id="main-navigation"
+        >
+            <ul>
+                <li><a href="../index.html">Profil</a></li>
+                <li><a href="cv.html">Životopis</a></li>
+                <li><a href="workspace.html">Pracovné prostredie</a></li>
+                <li><a aria-current="page" class="active" href="schedule.html">Rozvrh</a></li>
+                <li><a href="map.html">Kde ma nájdete</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main class="container" id="main-content">
+    <h1>Kedy ma zastihnete</h1>
+    <h2>Môj týždenný rozvrh</h2>
+    <p
+            aria-live="polite"
+            id="lesson-status"
+    >
+        Po načítaní stránky sa zobrazí aktuálna alebo najbližšia hodina.</p>
+    <div aria-label="Filter predmetov" class="filter-group" role="group">
+        <button aria-pressed="true" class="filter-button active" data-filter="all">Všetko</button>
+        <button aria-pressed="false" class="filter-button" data-filter="lecture">Prednášky</button>
+        <button aria-pressed="false" class="filter-button" data-filter="exercise">Cvičenia</button>
+    </div>
+    <p aria-live="polite" id="filter-status"></p>
+    <div class="table-scroll">
+        <table class="schedule-table">
+            <caption>Rozvrh od 7:00 do 21:00. Zelená: prednášky, ružová: cvičenia, modrá: telesná kultúra.</caption>
+            <thead>
+            <tr>
+                <th scope="col">Deň</th>
+                <th scope="col">7:00–8:00</th>
+                <th scope="col">8:00–9:00</th>
+                <th scope="col">9:00–10:00</th>
+                <th scope="col">10:00–11:00</th>
+                <th scope="col">11:00–12:00</th>
+                <th scope="col">12:00–13:00</th>
+                <th scope="col">13:00–14:00</th>
+                <th scope="col">14:00–15:00</th>
+                <th scope="col">15:00–16:00</th>
+                <th scope="col">16:00–17:00</th>
+                <th scope="col">17:00–18:00</th>
+                <th scope="col">18:00–19:00</th>
+                <th scope="col">19:00–20:00</th>
+                <th scope="col">20:00–21:00</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Po</th>
+                <td class="free" colspan="2"></td>
+                <td class="class-cell lecture" colspan="2" data-day="1" data-end="11" data-start="9">Operačné systémy
+                </td>
+                <td class="free" colspan="2"></td>
+                <td class="class-cell lecture" colspan="2" data-day="1" data-end="15" data-start="13">Webové technológie 1
+                </td>
+                <td class="class-cell exercise" colspan="2" data-day="1" data-end="17" data-start="15">Lineárna algebra
+                    2
+                </td>
+                <td class="free" colspan="4"></td>
+            </tr>
+            <tr>
+                <th scope="row">Ut</th>
+                <td class="free"></td>
+                <td class="class-cell exercise" colspan="2" data-day="2" data-end="10" data-start="8">Analýza a
+                    zložitosť algoritmov
+                </td>
+                <td class="class-cell lecture" colspan="2" data-day="2" data-end="12" data-start="10">Webové technológie
+                    1
+                </td>
+                <td class="free" colspan="3"></td>
+                <td class="class-cell exercise" colspan="2" data-day="2" data-end="17" data-start="15">Softvérové
+                    inžinierstvo
+                </td>
+                <td class="class-cell exercise" data-day="2" data-end="18" data-start="17">Softvérové inžinierstvo</td>
+                <td class="free" colspan="3"></td>
+            </tr>
+            <tr>
+                <th scope="row">St</th>
+                <td class="free"></td>
+                <td class="class-cell lecture" colspan="2" data-day="3" data-end="10" data-start="8">Operačné systémy
+                </td>
+                <td class="class-cell exercise" colspan="2" data-day="3" data-end="12" data-start="10">Analýza a
+                    zložitosť algoritmov
+                </td>
+                <td class="free"></td>
+                <td class="class-cell exercise" colspan="2" data-day="3" data-end="15" data-start="13">Webové
+                    technológie 1
+                </td>
+                <td class="class-cell lecture" colspan="2" data-day="3" data-end="17" data-start="15">Lineárna algebra
+                    2
+                </td>
+                <td class="free" colspan="4"></td>
+            </tr>
+            <tr>
+                <th scope="row">Št</th>
+                <td class="free" colspan="2"></td>
+                <td class="class-cell sport" colspan="2" data-day="4" data-end="11" data-start="9">Telesná kultúra 5
+                </td>
+                <td class="class-cell exercise" data-day="4" data-end="12" data-start="11">Softvérové inžinierstvo</td>
+                <td class="free" colspan="9"></td>
+            </tr>
+            <tr>
+                <th scope="row">Pi</th>
+                <td class="free" colspan="14"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>Mimo výučby ma môžete stretnúť v internáte Mladosť.</p>
+    <section aria-labelledby="semester-title" class="semester">
+        <div class="semester-header">
+            <h2 id="semester-title">Priebeh semestra</h2>
+            <strong id="semester-percent">0 %</strong>
+        </div>
+        <div aria-labelledby="semester-title" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"
+             class="progress" id="semester-progress" role="progressbar">
+            <div id="progress-bar"></div>
+        </div>
+        <p id="semester-dates"></p>
+    </section>
+</main>
+<footer class="site-footer">
+    <div class="container">
+        <address><a href="mailto:xpostaichuk@gmail.com">xpostaichuk@gmail.com</a> · <a href="tel:+421952170860">+421 952
+            170 860</a></address>
+        <p>© 2026 Pavlo Postaichuk · <a href="map.html#sources">Zdroje a podklady</a></p>
+    </div>
+</footer>
+<script src="../js/script.js"></script>
+</body>
+</html>

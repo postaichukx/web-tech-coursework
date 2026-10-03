@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Dochádzam z internátu Mladosť na FEI STU v Bratislave." name="description">
+    <meta content="Pavlo Postaichuk | Kde ma nájdete" property="og:title">
+    <meta content="Dochádzam z internátu Mladosť na FEI STU v Bratislave." property="og:description">
+    <meta content="../img/photo_2026-09-30_14-45-53.jpg" property="og:image">
+    <title>Pavlo Postaichuk | Kde ma nájdete</title>
+    <link href="../img/favicon.svg" rel="icon" type="image/svg">
+    <link href="../css/styles.css" rel="stylesheet">
+    <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Preskočiť na obsah</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="../index.html">
+            <span class="monogram">PP</span>
+            <span><strong>Pavlo Postaichuk</strong><small>Som študent aplikovanej informatiky na FEI STU.</small></span>
+        </a>
+        <button aria-controls="main-navigation" aria-expanded="false" class="menu-toggle" type="button">☰ Menu</button>
+        <nav aria-label="Hlavná navigácia" class="main-nav" id="main-navigation">
+            <ul>
+                <li><a href="../index.html">Profil</a></li>
+                <li><a href="cv.html">Životopis</a></li>
+                <li><a href="workspace.html">Pracovné prostredie</a></li>
+                <li><a href="schedule.html">Rozvrh</a></li>
+                <li><a aria-current="page" class="active" href="map.html">Kde ma nájdete</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main class="container" id="main-content">
+    <h1>Kde ma nájdete</h1>
+    <p>Dochádzam z internátu Mladosť na Starých gruntoch 53 na FEI STU. Mapa zobrazuje približné polohy.</p>
+    <section class="card">
+        <h2>Moja cesta do školy</h2>
+        <div aria-label="Mapa internátu Mladosť a FEI STU" id="leaflet-map" role="region"></div>
+        <p>Klikni do mapy a pomenuj nový bod. Potom ho vyber zo zoznamu a zvoľ cieľ.</p>
+        <div class="map-tools">
+            <label>Vyber bod <select id="point-select">
+                <option value="home">ŠD Mladosť</option>
+                <option value="school">FEI STU</option>
+            </select></label>
+            <label>Vyber cieľ <select id="target-select">
+                <option value="school">FEI STU</option>
+                <option value="home">ŠD Mladosť</option>
+            </select></label>
+        </div>
+        <p aria-live="polite" id="distance-result">Načítavam mapu...</p>
+        <p aria-live="polite" id="map-empty">Zatiaľ nemáš vlastné body. Prvý pridáš kliknutím do mapy.</p>
+        <ul id="point-list">
+            <li>ŠD Mladosť – Staré grunty 53</li>
+            <li>FEI STU – moja škola</li>
+        </ul>
+    </section>
+    <section class="card">
+        <h2>Počasie pri škole</h2>
+        <p aria-live="polite" id="weather">Načítavam počasie...</p>
+    </section>
+    <section id="sources">
+        <h2>Zdroje</h2>
+        <ul>
+            <li>Moja fotografia je z môjho osobného archívu. Ilustráciu pracovného stola som vytvoril s pomocou OpenAI
+                Codex.
+                <ul>
+                    <li>Responce: create a picture of a crafting table from minecraft with macbook notepad, dota
+                        thematic, cozy lights
+                    </li>
+                </ul>
+            </li>
+            <li>Mapové podklady: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>. Knižnica: <a
+                    href="https://leafletjs.com/">Leaflet</a>.
+            </li>
+            <li>Počasie: <a href="https://open-meteo.com/">Open-Meteo</a>.</li>
+            <li>Písma: <a href="https://www.dafont.com/new.php">MAVERICK (PINISIART) a Histore Magical Italic Demo
+                (Letterena Studios)</a>.
+                <ul>
+                    <li>Konvertované z .ttf na .woff2 pomocou <a href="https://cloudconvert.com/ttf-to-woff2">cloudconvert</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+</main>
+<footer class="site-footer">
+    <div class="container">
+        <address><a href="mailto:xpostaichuk@gmail.com">xpostaichuk@gmail.com</a> · <a href="tel:+421952170860">+421 952
+            170 860</a></address>
+        <p>2026 Pavlo Postaichuk · <a href="map.html#sources">Zdroje a podklady</a></p>
+    </div>
+</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="../js/script.js"></script>
+</body>
+</html>

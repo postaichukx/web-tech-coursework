@@ -1,0 +1,57 @@
+@page {
+    size: A4;
+    margin: 12mm;
+}
+
+@media print {
+    .site-header, .site-footer, .skip-link {
+        display: none;
+    }
+
+    body {
+        background: white;
+        color: black;
+        font-size: 10pt;
+    }
+
+    .container {
+        max-width: none;
+        padding: 0;
+    }
+
+    h1 {
+        font-size: 22pt;
+    }
+
+    h2 {
+        font-size: 14pt;
+        color: black;
+    }
+
+    h3 {
+        font-size: 11pt;
+    }
+
+    .cv-grid {
+        grid-template-columns: 30% 70%;
+        background: none;
+    }
+
+    .cv-sidebar, .cv-main {
+        padding: 10px;
+        background: none;
+        color: black;
+    }
+
+    .cv-sidebar img {
+        max-width: 120px;
+    }
+
+    .cv-main section + section {
+        margin-top: 15px;
+    }
+
+    article, .skills {
+        break-inside: avoid;
+    }
+}

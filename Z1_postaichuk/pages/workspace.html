@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Môj pracovný stôl a nástroje, ktoré používam pri štúdiu." name="description">
+    <meta content="Pavlo Postaichuk | Pracovné prostredie" property="og:title">
+    <meta content="Môj pracovný stôl a nástroje, ktoré používam pri štúdiu." property="og:description">
+    <meta content="../img/photo_2026-09-30_14-45-53.jpg" property="og:image">
+    <title>Pavlo Postaichuk | Pracovné prostredie</title>
+    <link href="../img/favicon.svg" rel="icon" type="image/svg">
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Preskočiť na obsah</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="../index.html">
+            <span class="monogram">PP</span>
+            <span><strong>Pavlo Postaichuk</strong><small>Som študent aplikovanej informatiky na FEI STU.</small></span>
+        </a>
+        <button aria-controls="main-navigation" aria-expanded="false" class="menu-toggle" type="button">☰ Menu</button>
+        <nav aria-label="Hlavná navigácia" class="main-nav" id="main-navigation">
+            <ul>
+                <li><a href="../index.html">Profil</a></li>
+                <li><a href="cv.html">Životopis</a></li>
+                <li><a aria-current="page" class="active" href="workspace.html">Pracovné prostredie</a></li>
+                <li><a href="schedule.html">Rozvrh</a></li>
+                <li><a href="map.html">Kde ma nájdete</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main class="container" id="main-content">
+    <h1 id="workspace-title">Moje pracovné prostredie</h1>
+    <p>Pri práci používam notebook a zápisník. Vyber si označený predmet a pozri sa, na čo mi slúži.</p>
+    <section aria-labelledby="workspace-title">
+        <div class="workspace-visual">
+            <img alt="Pracovný stôl s notebookom, zápisníkom, lampou a rastlinou"
+                 height="941" src="../img/0fe56a41-9570-404b-a842-ae4abb046295.png" width="1672">
+            <div class="hotspot" style="--x: 43%; --y: 35%">
+                <input aria-label="laptop" checked id="laptop" name="hotspot" type="radio">
+                <label for="laptop">1</label>
+                <div class="hotspot-panel"><h2>Laptop</h2>
+                    <p>Laptop používam na učenie HTML a CSS, tvorbu webových stránok a trávenie voľného času.</p></div>
+            </div>
+            <div class="hotspot" style="--x: 32%; --y: 67%">
+                <input aria-label="zapisnik" id="notebook" name="hotspot" type="radio">
+                <label for="notebook">2</label>
+                <div class="hotspot-panel"><h2>Zápisník</h2>
+                    <p>Zápisník používam na predmety ako LA2, na poznámky a precvičovanie.</p></div>
+            </div>
+            <div class="hotspot" style="--x: 63%; --y: 82%">
+                <input aria-label="stolicka" id="chair" name="hotspot" type="radio">
+                <label for="chair">3</label>
+                <div class="hotspot-panel"><h2>Stolička</h2>
+                    <p>V skutočnosti mám obyčajnú stoličku z internátu. Neznášam ju, preto častejšie sedím na
+                        posteli.</p></div>
+            </div>
+            <div class="hotspot" style="--x: 16%; --y: 45%">
+                <input aria-label="soska" id="statue" name="hotspot" type="radio">
+                <label for="statue">4</label>
+                <div class="hotspot-panel"><h2>Soška</h2>
+                    <p>Soška z Doty je tam len pre zábavu. V skutočnosti mám v izbe sošku Shadow Fienda.</p></div>
+            </div>
+            <div class="hotspot" style="--x: 81%; --y: 50%">
+                <input aria-label="okno" id="window" name="hotspot" type="radio">
+                <label for="window">5</label>
+                <div class="hotspot-panel"><h2>Okno</h2>
+                    <p>často sa doň pozerám, aby som sa odreagoval. Páči sa mi táto pixelová krajina.</p></div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer class="site-footer">
+    <div class="container">
+        <address><a href="mailto:xpostaichuk@gmail.com">xpostaichuk@gmail.com</a> · <a href="tel:+421952170860">+421 952
+            170 860</a></address>
+        <p>© 2026 Pavlo Postaichuk · <a href="map.html#sources">Zdroje a podklady</a></p>
+    </div>
+</footer>
+<script src="../js/script.js"></script>
+</body>
+</html>

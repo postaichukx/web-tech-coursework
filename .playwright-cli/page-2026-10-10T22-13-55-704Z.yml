@@ -1,0 +1,73 @@
+- generic [active] [ref=f1e1]:
+  - link "Preskočiť na obsah" [ref=f1e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f1e3]:
+    - generic [ref=f1e4]:
+      - link "PP Pavlo Postaichuk Som študent aplikovanej informatiky na FEI STU." [ref=f1e5] [cursor=pointer]:
+        - /url: ../index.html
+        - generic [ref=f1e6]: PP
+        - generic [ref=f1e7]:
+          - strong [ref=f1e8]: Pavlo Postaichuk
+          - generic [ref=f1e9]: Som študent aplikovanej informatiky na FEI STU.
+      - navigation "Hlavná navigácia" [ref=f1e10]:
+        - list [ref=f1e11]:
+          - listitem [ref=f1e12]:
+            - link "Profil" [ref=f1e13] [cursor=pointer]:
+              - /url: ../index.html
+          - listitem [ref=f1e14]:
+            - link "Životopis" [ref=f1e15] [cursor=pointer]:
+              - /url: cv.html
+          - listitem [ref=f1e16]:
+            - link "Pracovné prostredie" [ref=f1e17] [cursor=pointer]:
+              - /url: workspace.html
+          - listitem [ref=f1e18]:
+            - link "Rozvrh" [ref=f1e19] [cursor=pointer]:
+              - /url: schedule.html
+          - listitem [ref=f1e20]:
+            - link "Kde ma nájdete" [ref=f1e21] [cursor=pointer]:
+              - /url: map.html
+  - main [ref=f1e22]:
+    - heading "Môj životopis" [level=1] [ref=f1e23]
+    - generic [ref=f1e24]:
+      - complementary [ref=f1e25]:
+        - img "Moja fotografia" [ref=f1e26]
+        - heading "Kontakt" [level=2] [ref=f1e27]
+        - generic [ref=f1e28]:
+          - link "xpostaichuk@gmail.com" [ref=f1e29] [cursor=pointer]:
+            - /url: mailto:xpostaichuk@gmail.com
+          - link "+421 952 170 860" [ref=f1e30] [cursor=pointer]:
+            - /url: tel:+421952170860
+          - generic [ref=f1e31]: Bratislava, Slovensko
+        - heading "O mne" [level=2] [ref=f1e32]
+        - paragraph [ref=f1e33]: Som aktívny študent aplikovanej informatiky. Vo voľnom čase sa rád venujem plávaniu, no väčšinu času trávim učením sa rôznych oblastí IT. Zaujíma ma tvorba webových stránok a chcem sa naučiť svoje ciele dosahovať správne, efektívne a premyslene pomocou technológií, ako sú HTML, CSS, JavaScript a ďalšie.
+      - generic [ref=f1e34]:
+        - generic [ref=f1e35]:
+          - heading "Moje vzdelanie" [level=2] [ref=f1e36]
+          - article [ref=f1e37]:
+            - 'heading "2024 – dnes: FEI STU" [level=3] [ref=f1e38]'
+            - paragraph [ref=f1e39]: Študujem aplikovanú informatiku.
+          - article [ref=f1e40]:
+            - 'heading "2013 – 2024: škola" [level=3] [ref=f1e41]'
+            - paragraph [ref=f1e42]: Navštevoval som bežnú základnú a strednú školu na Ukrajine, kde som absolvoval 11 rokov štúdia.
+        - generic [ref=f1e43]:
+          - heading "Moje zručnosti" [level=2] [ref=f1e44]
+          - list [ref=f1e45]:
+            - listitem [ref=f1e46]: HTML a CSS – Základná úroveň.
+            - listitem [ref=f1e47]: JavaScript – Základná úroveň.
+            - listitem [ref=f1e48]: Python a dáta – stredne pokročilá úroveň.
+            - listitem [ref=f1e49]: Angličtina – B2.
+            - listitem [ref=f1e50]: Ukrajinský jazyk – rodný jazyk
+            - listitem [ref=f1e51]: Slovenský jazyk – úroveň B1–B2
+            - listitem [ref=f1e52]: Logické myslenie – dobrá úroveň, dokážem analyzovať problémy a hľadať praktické riešenia.
+  - contentinfo [ref=f1e53]:
+    - generic [ref=f1e54]:
+      - generic [ref=f1e55]:
+        - link "xpostaichuk@gmail.com" [ref=f1e56] [cursor=pointer]:
+          - /url: mailto:xpostaichuk@gmail.com
+        - text: ·
+        - link "+421 952 170 860" [ref=f1e57] [cursor=pointer]:
+          - /url: tel:+421952170860
+      - paragraph [ref=f1e58]:
+        - text: © 2026 Pavlo Postaichuk ·
+        - link "Zdroje a podklady" [ref=f1e59] [cursor=pointer]:
+          - /url: map.html#sources

@@ -1,0 +1,48 @@
+- generic [active] [ref=f3e1]:
+  - link "Preskočiť na obsah" [ref=f3e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - link "PP Pavlo Postaichuk Som študent aplikovanej informatiky na FEI STU." [ref=f3e5] [cursor=pointer]:
+        - /url: ../index.html
+        - generic [ref=f3e6]: PP
+        - generic [ref=f3e7]:
+          - strong [ref=f3e8]: Pavlo Postaichuk
+          - generic [ref=f3e9]: Som študent aplikovanej informatiky na FEI STU.
+      - button "☰ Menu" [ref=f3e10] [cursor=pointer]
+  - main [ref=f3e11]:
+    - heading "Moje pracovné prostredie" [level=1] [ref=f3e12]
+    - paragraph [ref=f3e13]: Pri práci používam notebook a zápisník. Vyber si označený predmet a pozri sa, na čo mi slúži.
+    - region "Moje pracovné prostredie" [ref=f3e14]:
+      - generic [ref=f3e15]:
+        - img "Pracovný stôl s notebookom, zápisníkom, lampou a rastlinou" [ref=f3e16]
+        - generic:
+          - radio "laptop" [checked] [ref=f3e17]
+          - generic [ref=f3e18] [cursor=pointer]: "1"
+          - generic [ref=f3e19]:
+            - heading "Laptop" [level=2] [ref=f3e20]
+            - paragraph [ref=f3e21]: Laptop používam na učenie HTML a CSS, tvorbu webových stránok a trávenie voľného času.
+        - generic:
+          - radio "zapisnik" [ref=f3e22]
+          - generic [ref=f3e23] [cursor=pointer]: "2"
+        - generic:
+          - radio "stolicka" [ref=f3e24]
+          - generic [ref=f3e25] [cursor=pointer]: "3"
+        - generic:
+          - radio "soska" [ref=f3e26]
+          - generic [ref=f3e27] [cursor=pointer]: "4"
+        - generic:
+          - radio "okno" [ref=f3e28]
+          - generic [ref=f3e29] [cursor=pointer]: "5"
+  - contentinfo [ref=f3e30]:
+    - generic [ref=f3e31]:
+      - generic [ref=f3e32]:
+        - link "xpostaichuk@gmail.com" [ref=f3e33] [cursor=pointer]:
+          - /url: mailto:xpostaichuk@gmail.com
+        - text: ·
+        - link "+421 952 170 860" [ref=f3e34] [cursor=pointer]:
+          - /url: tel:+421952170860
+      - paragraph [ref=f3e35]:
+        - text: © 2026 Pavlo Postaichuk ·
+        - link "Zdroje a podklady" [ref=f3e36] [cursor=pointer]:
+          - /url: map.html#sources

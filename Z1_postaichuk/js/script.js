@@ -114,6 +114,8 @@ function setupMap() {
     const select = document.querySelector('#point-select');
     const target = document.querySelector('#target-select');
     const message = document.querySelector('#map-empty');
+    const pointForm = document.querySelector('#point-form');
+    const pointFormStatus = document.querySelector('#point-form-status');
     const markers = {};
     const map = L.map('leaflet-map').setView([48.156, 17.068], 14);
     const color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
@@ -137,16 +139,26 @@ function setupMap() {
     function addPoint(point) {
         points[point.id] = point;
         select.add(new Option(point.name, point.id));
-        const item = document.createElement('li');
-        item.textContent = point.name;
-        document.querySelector('#point-list').append(item);
         addMarker(point.id);
-        message.textContent = 'Vlastné body vyberieš zo zoznamu. Ďalší pridáš kliknutím do mapy.';
+        message.textContent = 'Vlastné body vyberieš zo zoznamu. Ďalší pridáš kliknutím do mapy alebo formulárom.';
     }
 
     addMarker('home');
     addMarker('school');
     let saved = [];
+
+    function savePoint(point) {
+        saved.push(point);
+        addPoint(point);
+        select.value = point.id;
+        updateDistance();
+        try {
+            localStorage.setItem('postaichuk-map-points', JSON.stringify(saved));
+        } catch (error) {
+            message.textContent = 'Bod je na mape, ale prehliadač ho nedovolil uložiť po obnovení stránky.';
+        }
+    }
+
     try {
         const stored = JSON.parse(localStorage.getItem('postaichuk-map-points') || '[]');
         if (!Array.isArray(stored)) throw new Error('Invalid saved points');
@@ -157,22 +169,37 @@ function setupMap() {
             addPoint(point);
         }
     } catch (error) {
-        message.textContent = 'Uložené body sa nepodarilo načítať. Nový bod pridáš kliknutím do mapy.';
+        message.textContent = 'Uložené body sa nepodarilo načítať. Nový bod pridáš kliknutím do mapy alebo formulárom.';
     }
+
+    pointForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const name = document.querySelector('#point-name').value.trim();
+        const latitude = Number(document.querySelector('#point-latitude').value);
+        const longitude = Number(document.querySelector('#point-longitude').value);
+        if (!name || !Number.isFinite(latitude) || latitude < -90 || latitude > 90
+            || !Number.isFinite(longitude) || longitude < -180 || longitude > 180) {
+            pointFormStatus.textContent = 'Skontroluj názov a súradnice bodu.';
+            return;
+        }
+        const point = {
+            id: 'point-' + Date.now(),
+            name: name,
+            lat: latitude,
+            lon: longitude
+        };
+        savePoint(point);
+        pointForm.reset();
+        pointFormStatus.textContent = 'Bod bol pridaný na mapu a uložený.';
+        markers[point.id].openPopup();
+    });
+
     map.on('click', function (event) {
         const name = prompt('Ako sa má nový bod volať?');
         if (!name || !name.trim()) return;
         const point = {id: 'point-' + Date.now(), name: name.trim(), lat: event.latlng.lat, lon: event.latlng.lng};
-        saved.push(point);
-        addPoint(point);
-        select.value = point.id;
-        updateDistance();
+        savePoint(point);
         markers[point.id].openPopup();
-        try {
-            localStorage.setItem('postaichuk-map-points', JSON.stringify(saved));
-        } catch (error) {
-            message.textContent = 'Bod je na mape, ale prehliadač ho nedovolil uložiť po obnovení stránky.';
-        }
     });
 
     function updateDistance() {

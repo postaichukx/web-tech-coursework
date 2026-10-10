@@ -1,0 +1,111 @@
+- generic [active] [ref=f5e1]:
+  - link "Preskočiť na obsah" [ref=f5e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f5e3]:
+    - generic [ref=f5e4]:
+      - link "PP Pavlo Postaichuk Som študent aplikovanej informatiky na FEI STU." [ref=f5e5] [cursor=pointer]:
+        - /url: ../index.html
+        - generic [ref=f5e6]: PP
+        - generic [ref=f5e7]:
+          - strong [ref=f5e8]: Pavlo Postaichuk
+          - generic [ref=f5e9]: Som študent aplikovanej informatiky na FEI STU.
+      - navigation "Hlavná navigácia" [ref=f5e10]:
+        - list [ref=f5e11]:
+          - listitem [ref=f5e12]:
+            - link "Profil" [ref=f5e13] [cursor=pointer]:
+              - /url: ../index.html
+          - listitem [ref=f5e14]:
+            - link "Životopis" [ref=f5e15] [cursor=pointer]:
+              - /url: cv.html
+          - listitem [ref=f5e16]:
+            - link "Pracovné prostredie" [ref=f5e17] [cursor=pointer]:
+              - /url: workspace.html
+          - listitem [ref=f5e18]:
+            - link "Rozvrh" [ref=f5e19] [cursor=pointer]:
+              - /url: schedule.html
+          - listitem [ref=f5e20]:
+            - link "Kde ma nájdete" [ref=f5e21] [cursor=pointer]:
+              - /url: map.html
+  - main [ref=f5e22]:
+    - heading "Kedy ma zastihnete" [level=1] [ref=f5e23]
+    - heading "Môj týždenný rozvrh" [level=2] [ref=f5e24]
+    - paragraph [ref=f5e25]: Teraz nemám výučbu. Najbližšie mám Operačné systémy v pondelok o 9:00.
+    - group "Filter predmetov" [ref=f5e26]:
+      - button "Všetko" [pressed] [ref=f5e27] [cursor=pointer]
+      - button "Prednášky" [ref=f5e28] [cursor=pointer]
+      - button "Cvičenia" [ref=f5e29] [cursor=pointer]
+    - paragraph
+    - table [ref=f5e31]:
+      - caption [ref=f5e32]: "Rozvrh od 7:00 do 21:00. Zelená: prednášky, ružová: cvičenia, modrá: telesná kultúra."
+      - rowgroup [ref=f5e33]:
+        - row [ref=f5e34]:
+          - columnheader "Deň" [ref=f5e35]
+          - columnheader "7:00–8:00" [ref=f5e36]
+          - columnheader "8:00–9:00" [ref=f5e37]
+          - columnheader "9:00–10:00" [ref=f5e38]
+          - columnheader "10:00–11:00" [ref=f5e39]
+          - columnheader "11:00–12:00" [ref=f5e40]
+          - columnheader "12:00–13:00" [ref=f5e41]
+          - columnheader "13:00–14:00" [ref=f5e42]
+          - columnheader "14:00–15:00" [ref=f5e43]
+          - columnheader "15:00–16:00" [ref=f5e44]
+          - columnheader "16:00–17:00" [ref=f5e45]
+          - columnheader "17:00–18:00" [ref=f5e46]
+          - columnheader "18:00–19:00" [ref=f5e47]
+          - columnheader "19:00–20:00" [ref=f5e48]
+          - columnheader "20:00–21:00" [ref=f5e49]
+      - rowgroup [ref=f5e50]:
+        - row [ref=f5e51]:
+          - rowheader "Po" [ref=f5e52]
+          - cell [ref=f5e53]
+          - cell "Operačné systémy" [ref=f5e54]
+          - cell [ref=f5e55]
+          - cell "Webové technológie 1" [ref=f5e56]
+          - cell "Lineárna algebra 2" [ref=f5e57]
+          - cell [ref=f5e58]
+        - row [ref=f5e59]:
+          - rowheader "Ut" [ref=f5e60]
+          - cell [ref=f5e61]
+          - cell "Analýza a zložitosť algoritmov" [ref=f5e62]
+          - cell "Webové technológie 1" [ref=f5e63]
+          - cell [ref=f5e64]
+          - cell "Softvérové inžinierstvo" [ref=f5e65]
+          - cell "Softvérové inžinierstvo" [ref=f5e66]
+          - cell [ref=f5e67]
+        - row [ref=f5e68]:
+          - rowheader "St" [ref=f5e69]
+          - cell [ref=f5e70]
+          - cell "Operačné systémy" [ref=f5e71]
+          - cell "Analýza a zložitosť algoritmov" [ref=f5e72]
+          - cell [ref=f5e73]
+          - cell "Webové technológie 1" [ref=f5e74]
+          - cell "Lineárna algebra 2" [ref=f5e75]
+          - cell [ref=f5e76]
+        - row [ref=f5e77]:
+          - rowheader "Št" [ref=f5e78]
+          - cell [ref=f5e79]
+          - cell "Telesná kultúra 5" [ref=f5e80]
+          - cell "Softvérové inžinierstvo" [ref=f5e81]
+          - cell [ref=f5e82]
+        - row [ref=f5e83]:
+          - rowheader "Pi" [ref=f5e84]
+          - cell [ref=f5e85]
+    - paragraph [ref=f5e86]: Mimo výučby ma môžete stretnúť v internáte Mladosť.
+    - region [ref=f5e87]:
+      - generic [ref=f5e88]:
+        - heading "Priebeh semestra" [level=2] [ref=f5e89]
+        - strong [ref=f5e90]: 29 %
+      - progressbar "Priebeh semestra" [ref=f5e91]
+      - paragraph [ref=f5e93]: "Semester: 14. 9. 2026 – 14. 12. 2026"
+  - contentinfo [ref=f5e94]:
+    - generic [ref=f5e95]:
+      - generic [ref=f5e96]:
+        - link "xpostaichuk@gmail.com" [ref=f5e97] [cursor=pointer]:
+          - /url: mailto:xpostaichuk@gmail.com
+        - text: ·
+        - link "+421 952 170 860" [ref=f5e98] [cursor=pointer]:
+          - /url: tel:+421952170860
+      - paragraph [ref=f5e99]:
+        - text: © 2026 Pavlo Postaichuk ·
+        - link "Zdroje a podklady" [ref=f5e100] [cursor=pointer]:
+          - /url: map.html#sources

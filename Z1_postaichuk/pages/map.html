@@ -8,7 +8,7 @@
     <meta content="Dochádzam z internátu Mladosť na FEI STU v Bratislave." property="og:description">
     <meta content="../img/photo_2026-09-30_14-45-53.jpg" property="og:image">
     <title>Pavlo Postaichuk | Kde ma nájdete</title>
-    <link href="../img/favicon.svg" rel="icon" type="image/svg">
+    <link href="../img/favicon.ico" rel="icon" type="image/x-icon">
     <link href="../css/styles.css" rel="stylesheet">
     <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
 </head>
@@ -38,7 +38,19 @@
     <section class="card">
         <h2>Moja cesta do školy</h2>
         <div aria-label="Mapa internátu Mladosť a FEI STU" id="leaflet-map" role="region"></div>
-        <p>Klikni do mapy a pomenuj nový bod. Potom ho vyber zo zoznamu a zvoľ cieľ.</p>
+        <p>Klikni do mapy a pomenuj nový bod. Bod môžeš pridať aj pomocou formulára nižšie.</p>
+        <form class="point-form" id="point-form">
+            <h3>Pridaj bod pomocou klávesnice</h3>
+            <p id="point-form-help">Zadaj názov a súradnice bodu v desatinnom formáte.</p>
+            <label for="point-name">Názov bodu</label>
+            <input id="point-name" name="point-name" required type="text">
+            <label for="point-latitude">Zemepisná šírka</label>
+            <input id="point-latitude" max="90" min="-90" name="point-latitude" required step="any" type="number">
+            <label for="point-longitude">Zemepisná dĺžka</label>
+            <input id="point-longitude" max="180" min="-180" name="point-longitude" required step="any" type="number">
+            <button type="submit">Pridať bod</button>
+            <p aria-live="polite" id="point-form-status"></p>
+        </form>
         <div class="map-tools">
             <label>Vyber bod <select id="point-select">
                 <option value="home">ŠD Mladosť</option>
@@ -50,11 +62,8 @@
             </select></label>
         </div>
         <p aria-live="polite" id="distance-result">Načítavam mapu...</p>
-        <p aria-live="polite" id="map-empty">Zatiaľ nemáš vlastné body. Prvý pridáš kliknutím do mapy.</p>
-        <ul id="point-list">
-            <li>ŠD Mladosť – Staré grunty 53</li>
-            <li>FEI STU – moja škola</li>
-        </ul>
+        <p aria-live="polite" id="map-empty">Vlastné body vyberieš vo výberových poliach. Ďalší pridáš kliknutím do mapy
+            alebo formulárom.</p>
     </section>
     <section class="card">
         <h2>Počasie pri škole</h2>
@@ -66,7 +75,7 @@
             <li>Moja fotografia je z môjho osobného archívu. Ilustráciu pracovného stola som vytvoril s pomocou OpenAI
                 Codex.
                 <ul>
-                    <li>Responce: create a picture of a crafting table from minecraft with macbook notepad, dota
+                    <li>Prompt: create a picture of a crafting table from minecraft with macbook notepad, dota
                         thematic, cozy lights
                     </li>
                 </ul>

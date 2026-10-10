@@ -299,6 +299,10 @@ address {
     margin: 0 0 5px;
 }
 
+.hotspot-panel h2 {
+    color: var(--white);
+}
+
 .hotspot input:checked + label + .hotspot-panel {
     display: block;
 }
@@ -419,6 +423,30 @@ address {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+}
+
+.point-form {
+    display: grid;
+    gap: 8px;
+    margin: 20px 0;
+    padding: var(--space);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--background);
+}
+
+.point-form h3, .point-form p {
+    margin: 0;
+}
+
+.point-form input {
+    width: 100%;
+    padding: 8px;
+}
+
+.point-form button {
+    justify-self: start;
+    margin-top: 4px;
 }
 
 .map-tools label {

@@ -1,0 +1,105 @@
+- generic [active] [ref=f10e1]:
+  - link "Preskočiť na obsah" [ref=f10e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f10e3]:
+    - generic [ref=f10e4]:
+      - link "PP Pavlo Postaichuk Som študent aplikovanej informatiky na FEI STU." [ref=f10e5] [cursor=pointer]:
+        - /url: ../index.html
+        - generic [ref=f10e6]: PP
+        - generic [ref=f10e7]:
+          - strong [ref=f10e8]: Pavlo Postaichuk
+          - generic [ref=f10e9]: Som študent aplikovanej informatiky na FEI STU.
+      - button "☰ Menu" [ref=f10e10] [cursor=pointer]
+  - main [ref=f10e11]:
+    - heading "Kde ma nájdete" [level=1] [ref=f10e12]
+    - paragraph [ref=f10e13]: Dochádzam z internátu Mladosť na Starých gruntoch 53 na FEI STU.
+    - generic [ref=f10e14]:
+      - heading "Moja cesta do školy" [level=2] [ref=f10e15]
+      - region "Mapa internátu Mladosť a FEI STU" [ref=f10e16]:
+        - generic:
+          - generic:
+            - img:
+              - generic [ref=f10e17] [cursor=pointer]
+          - generic:
+            - button "Marker" [ref=f10e18] [cursor=pointer]
+            - button "Marker" [ref=f10e19] [cursor=pointer]
+        - generic:
+          - generic [ref=f10e20]:
+            - button "Zoom in" [ref=f10e21] [cursor=pointer]: +
+            - button "Zoom out" [ref=f10e22] [cursor=pointer]: −
+          - generic [ref=f10e23]:
+            - link "Leaflet" [ref=f10e24] [cursor=pointer]:
+              - /url: https://leafletjs.com
+            - text: "| ©"
+            - link "OpenStreetMap" [ref=f10e29] [cursor=pointer]:
+              - /url: https://www.openstreetmap.org/copyright
+      - paragraph [ref=f10e30]: Klikni do mapy a pomenuj nový bod. Bod môžeš pridať aj pomocou formulára nižšie.
+      - generic [ref=f10e31]:
+        - heading "Pridaj bod pomocou klávesnice" [level=3] [ref=f10e32]
+        - paragraph [ref=f10e33]: Zadaj názov a súradnice bodu v desatinnom formáte.
+        - generic [ref=f10e34]: Názov bodu
+        - textbox "Názov bodu" [ref=f10e35]
+        - generic [ref=f10e36]: Zemepisná šírka
+        - spinbutton "Zemepisná šírka" [ref=f10e37]
+        - generic [ref=f10e38]: Zemepisná dĺžka
+        - spinbutton "Zemepisná dĺžka" [ref=f10e39]
+        - button "Pridať bod" [ref=f10e40] [cursor=pointer]
+        - paragraph
+      - generic [ref=f10e41]:
+        - generic [ref=f10e42]:
+          - text: Vyber bod
+          - combobox "Vyber bod" [ref=f10e43]:
+            - option "ŠD Mladosť" [selected]
+            - option "FEI STU"
+        - generic [ref=f10e44]:
+          - text: Vyber cieľ
+          - combobox "Vyber cieľ" [ref=f10e45]:
+            - option "FEI STU" [selected]
+            - option "ŠD Mladosť"
+      - paragraph [ref=f10e46]: "Vzdušná vzdialenosť: 0.91 km."
+      - paragraph [ref=f10e47]: Vlastné body vyberieš vo výberových poliach. Ďalší pridáš kliknutím do mapy alebo formulárom.
+    - generic [ref=f10e48]:
+      - heading "Počasie pri škole" [level=2] [ref=f10e49]
+      - paragraph [ref=f10e50]: "Teplota: 13.4 °C. Vietor: 6.1 km/h. Vlhkosť: 89 %."
+    - generic [ref=f10e51]:
+      - heading "Zdroje" [level=2] [ref=f10e52]
+      - list [ref=f10e53]:
+        - listitem [ref=f10e54]:
+          - text: Moja fotografia je z môjho osobného archívu. Ilustráciu pracovného stola som vytvoril s pomocou OpenAI Codex.
+          - list [ref=f10e55]:
+            - listitem [ref=f10e56]: "Prompt: create a picture of a crafting table from minecraft with macbook notepad, dota thematic, cozy lights"
+        - listitem [ref=f10e57]:
+          - text: "Mapové podklady:"
+          - link "OpenStreetMap" [ref=f10e58] [cursor=pointer]:
+            - /url: https://www.openstreetmap.org/copyright
+          - text: ". Knižnica:"
+          - link "Leaflet" [ref=f10e59] [cursor=pointer]:
+            - /url: https://leafletjs.com/
+          - text: .
+        - listitem [ref=f10e60]:
+          - text: "Počasie:"
+          - link "Open-Meteo" [ref=f10e61] [cursor=pointer]:
+            - /url: https://open-meteo.com/
+          - text: .
+        - listitem [ref=f10e62]:
+          - text: "Písma:"
+          - link "MAVERICK (PINISIART) a Histore Magical Italic Demo (Letterena Studios)" [ref=f10e63] [cursor=pointer]:
+            - /url: https://www.dafont.com/new.php
+          - text: .
+          - list [ref=f10e64]:
+            - listitem [ref=f10e65]:
+              - text: Konvertované z .ttf na .woff2 pomocou
+              - link "cloudconvert" [ref=f10e66] [cursor=pointer]:
+                - /url: https://cloudconvert.com/ttf-to-woff2
+  - contentinfo [ref=f10e67]:
+    - generic [ref=f10e68]:
+      - generic [ref=f10e69]:
+        - link "xpostaichuk@gmail.com" [ref=f10e70] [cursor=pointer]:
+          - /url: mailto:xpostaichuk@gmail.com
+        - text: ·
+        - link "+421 952 170 860" [ref=f10e71] [cursor=pointer]:
+          - /url: tel:+421952170860
+      - paragraph [ref=f10e72]:
+        - text: 2026 Pavlo Postaichuk ·
+        - link "Zdroje a podklady" [ref=f10e73] [cursor=pointer]:
+          - /url: map.html#sources

@@ -1,0 +1,21 @@
+WEBTE1 – výpis z validátorov
+=============================
+
+Dátum kontroly: 10. 10. 2026
+
+HTML Validator
+--------------
+Validator: https://validator.w3.org/nu/
+
+index.html              – 0 chýb
+pages/cv.html           – 0 chýb
+pages/workspace.html    – 0 chýb
+pages/schedule.html     – 0 chýb
+pages/map.html          – 0 chýb
+
+CSS Validator
+-------------
+Validator: https://jigsaw.w3.org/css-validator/
+
+css/styles.css          – validný CSS, 0 chýb
+css/print.css           – validný CSS, 0 chýb

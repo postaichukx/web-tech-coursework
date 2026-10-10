@@ -1,0 +1,95 @@
+- generic [active] [ref=f4e1]:
+  - link "Preskočiť na obsah" [ref=f4e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f4e3]:
+    - generic [ref=f4e4]:
+      - link "PP Pavlo Postaichuk Som študent aplikovanej informatiky na FEI STU." [ref=f4e5] [cursor=pointer]:
+        - /url: ../index.html
+        - generic [ref=f4e6]: PP
+        - generic [ref=f4e7]:
+          - strong [ref=f4e8]: Pavlo Postaichuk
+          - generic [ref=f4e9]: Som študent aplikovanej informatiky na FEI STU.
+      - button "☰ Menu" [ref=f4e10] [cursor=pointer]
+  - main [ref=f4e11]:
+    - heading "Kedy ma zastihnete" [level=1] [ref=f4e12]
+    - heading "Môj týždenný rozvrh" [level=2] [ref=f4e13]
+    - paragraph [ref=f4e14]: Teraz nemám výučbu. Najbližšie mám Operačné systémy v pondelok o 9:00.
+    - group "Filter predmetov" [ref=f4e15]:
+      - button "Všetko" [pressed] [ref=f4e16] [cursor=pointer]
+      - button "Prednášky" [ref=f4e17] [cursor=pointer]
+      - button "Cvičenia" [ref=f4e18] [cursor=pointer]
+    - paragraph
+    - table [ref=f4e20]:
+      - caption [ref=f4e21]: "Rozvrh od 7:00 do 21:00. Zelená: prednášky, ružová: cvičenia, modrá: telesná kultúra."
+      - rowgroup [ref=f4e22]:
+        - row [ref=f4e23]:
+          - columnheader "Deň" [ref=f4e24]
+          - columnheader "7:00–8:00" [ref=f4e25]
+          - columnheader "8:00–9:00" [ref=f4e26]
+          - columnheader "9:00–10:00" [ref=f4e27]
+          - columnheader "10:00–11:00" [ref=f4e28]
+          - columnheader "11:00–12:00" [ref=f4e29]
+          - columnheader "12:00–13:00" [ref=f4e30]
+          - columnheader "13:00–14:00" [ref=f4e31]
+          - columnheader "14:00–15:00" [ref=f4e32]
+          - columnheader "15:00–16:00" [ref=f4e33]
+          - columnheader "16:00–17:00" [ref=f4e34]
+          - columnheader "17:00–18:00" [ref=f4e35]
+          - columnheader "18:00–19:00" [ref=f4e36]
+          - columnheader "19:00–20:00" [ref=f4e37]
+          - columnheader "20:00–21:00" [ref=f4e38]
+      - rowgroup [ref=f4e39]:
+        - row [ref=f4e40]:
+          - rowheader "Po" [ref=f4e41]
+          - cell [ref=f4e42]
+          - cell "Operačné systémy" [ref=f4e43]
+          - cell [ref=f4e44]
+          - cell "Webové technológie 1" [ref=f4e45]
+          - cell "Lineárna algebra 2" [ref=f4e46]
+          - cell [ref=f4e47]
+        - row [ref=f4e48]:
+          - rowheader "Ut" [ref=f4e49]
+          - cell [ref=f4e50]
+          - cell "Analýza a zložitosť algoritmov" [ref=f4e51]
+          - cell "Webové technológie 1" [ref=f4e52]
+          - cell [ref=f4e53]
+          - cell "Softvérové inžinierstvo" [ref=f4e54]
+          - cell "Softvérové inžinierstvo" [ref=f4e55]
+          - cell [ref=f4e56]
+        - row [ref=f4e57]:
+          - rowheader "St" [ref=f4e58]
+          - cell [ref=f4e59]
+          - cell "Operačné systémy" [ref=f4e60]
+          - cell "Analýza a zložitosť algoritmov" [ref=f4e61]
+          - cell [ref=f4e62]
+          - cell "Webové technológie 1" [ref=f4e63]
+          - cell "Lineárna algebra 2" [ref=f4e64]
+          - cell [ref=f4e65]
+        - row [ref=f4e66]:
+          - rowheader "Št" [ref=f4e67]
+          - cell [ref=f4e68]
+          - cell "Telesná kultúra 5" [ref=f4e69]
+          - cell "Softvérové inžinierstvo" [ref=f4e70]
+          - cell [ref=f4e71]
+        - row [ref=f4e72]:
+          - rowheader "Pi" [ref=f4e73]
+          - cell [ref=f4e74]
+    - paragraph [ref=f4e75]: Mimo výučby ma môžete stretnúť v internáte Mladosť.
+    - region [ref=f4e76]:
+      - generic [ref=f4e77]:
+        - heading "Priebeh semestra" [level=2] [ref=f4e78]
+        - strong [ref=f4e79]: 29 %
+      - progressbar "Priebeh semestra" [ref=f4e80]
+      - paragraph [ref=f4e82]: "Semester: 14. 9. 2026 – 14. 12. 2026"
+  - contentinfo [ref=f4e83]:
+    - generic [ref=f4e84]:
+      - generic [ref=f4e85]:
+        - link "xpostaichuk@gmail.com" [ref=f4e86] [cursor=pointer]:
+          - /url: mailto:xpostaichuk@gmail.com
+        - text: ·
+        - link "+421 952 170 860" [ref=f4e87] [cursor=pointer]:
+          - /url: tel:+421952170860
+      - paragraph [ref=f4e88]:
+        - text: © 2026 Pavlo Postaichuk ·
+        - link "Zdroje a podklady" [ref=f4e89] [cursor=pointer]:
+          - /url: map.html#sources

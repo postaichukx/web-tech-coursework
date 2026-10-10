@@ -1,0 +1,121 @@
+- generic [active] [ref=f6e1]:
+  - link "Preskočiť na obsah" [ref=f6e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f6e3]:
+    - generic [ref=f6e4]:
+      - link "PP Pavlo Postaichuk Som študent aplikovanej informatiky na FEI STU." [ref=f6e5] [cursor=pointer]:
+        - /url: ../index.html
+        - generic [ref=f6e6]: PP
+        - generic [ref=f6e7]:
+          - strong [ref=f6e8]: Pavlo Postaichuk
+          - generic [ref=f6e9]: Som študent aplikovanej informatiky na FEI STU.
+      - navigation "Hlavná navigácia" [ref=f6e10]:
+        - list [ref=f6e11]:
+          - listitem [ref=f6e12]:
+            - link "Profil" [ref=f6e13] [cursor=pointer]:
+              - /url: ../index.html
+          - listitem [ref=f6e14]:
+            - link "Životopis" [ref=f6e15] [cursor=pointer]:
+              - /url: cv.html
+          - listitem [ref=f6e16]:
+            - link "Pracovné prostredie" [ref=f6e17] [cursor=pointer]:
+              - /url: workspace.html
+          - listitem [ref=f6e18]:
+            - link "Rozvrh" [ref=f6e19] [cursor=pointer]:
+              - /url: schedule.html
+          - listitem [ref=f6e20]:
+            - link "Kde ma nájdete" [ref=f6e21] [cursor=pointer]:
+              - /url: map.html
+  - main [ref=f6e22]:
+    - heading "Kde ma nájdete" [level=1] [ref=f6e23]
+    - paragraph [ref=f6e24]: Dochádzam z internátu Mladosť na Starých gruntoch 53 na FEI STU.
+    - generic [ref=f6e25]:
+      - heading "Moja cesta do školy" [level=2] [ref=f6e26]
+      - region "Mapa internátu Mladosť a FEI STU" [ref=f6e27]:
+        - generic:
+          - generic:
+            - img:
+              - generic [ref=f6e28] [cursor=pointer]
+          - generic:
+            - button "Marker" [ref=f6e29] [cursor=pointer]
+            - button "Marker" [ref=f6e30] [cursor=pointer]
+        - generic:
+          - generic [ref=f6e31]:
+            - button "Zoom in" [ref=f6e32] [cursor=pointer]: +
+            - button "Zoom out" [ref=f6e33] [cursor=pointer]: −
+          - generic [ref=f6e34]:
+            - link "Leaflet" [ref=f6e35] [cursor=pointer]:
+              - /url: https://leafletjs.com
+            - text: "| ©"
+            - link "OpenStreetMap" [ref=f6e40] [cursor=pointer]:
+              - /url: https://www.openstreetmap.org/copyright
+      - paragraph [ref=f6e41]: Klikni do mapy a pomenuj nový bod. Bod môžeš pridať aj pomocou formulára nižšie.
+      - generic [ref=f6e42]:
+        - heading "Pridaj bod pomocou klávesnice" [level=3] [ref=f6e43]
+        - paragraph [ref=f6e44]: Zadaj názov a súradnice bodu v desatinnom formáte.
+        - generic [ref=f6e45]: Názov bodu
+        - textbox "Názov bodu" [ref=f6e46]
+        - generic [ref=f6e47]: Zemepisná šírka
+        - spinbutton "Zemepisná šírka" [ref=f6e48]
+        - generic [ref=f6e49]: Zemepisná dĺžka
+        - spinbutton "Zemepisná dĺžka" [ref=f6e50]
+        - button "Pridať bod" [ref=f6e51] [cursor=pointer]
+        - paragraph
+      - generic [ref=f6e52]:
+        - generic [ref=f6e53]:
+          - text: Vyber bod
+          - combobox "Vyber bod" [ref=f6e54]:
+            - option "ŠD Mladosť" [selected]
+            - option "FEI STU"
+        - generic [ref=f6e55]:
+          - text: Vyber cieľ
+          - combobox "Vyber cieľ" [ref=f6e56]:
+            - option "FEI STU" [selected]
+            - option "ŠD Mladosť"
+      - paragraph [ref=f6e57]: "Vzdušná vzdialenosť: 0.91 km."
+      - paragraph [ref=f6e58]: Vlastné body vyberieš vo výberových poliach. Ďalší pridáš kliknutím do mapy alebo formulárom.
+    - generic [ref=f6e59]:
+      - heading "Počasie pri škole" [level=2] [ref=f6e60]
+      - paragraph [ref=f6e61]: "Teplota: 13.3 °C. Vietor: 5.1 km/h. Vlhkosť: 89 %."
+    - generic [ref=f6e62]:
+      - heading "Zdroje" [level=2] [ref=f6e63]
+      - list [ref=f6e64]:
+        - listitem [ref=f6e65]:
+          - text: Moja fotografia je z môjho osobného archívu. Ilustráciu pracovného stola som vytvoril s pomocou OpenAI Codex.
+          - list [ref=f6e66]:
+            - listitem [ref=f6e67]: "Prompt: create a picture of a crafting table from minecraft with macbook notepad, dota thematic, cozy lights"
+        - listitem [ref=f6e68]:
+          - text: "Mapové podklady:"
+          - link "OpenStreetMap" [ref=f6e69] [cursor=pointer]:
+            - /url: https://www.openstreetmap.org/copyright
+          - text: ". Knižnica:"
+          - link "Leaflet" [ref=f6e70] [cursor=pointer]:
+            - /url: https://leafletjs.com/
+          - text: .
+        - listitem [ref=f6e71]:
+          - text: "Počasie:"
+          - link "Open-Meteo" [ref=f6e72] [cursor=pointer]:
+            - /url: https://open-meteo.com/
+          - text: .
+        - listitem [ref=f6e73]:
+          - text: "Písma:"
+          - link "MAVERICK (PINISIART) a Histore Magical Italic Demo (Letterena Studios)" [ref=f6e74] [cursor=pointer]:
+            - /url: https://www.dafont.com/new.php
+          - text: .
+          - list [ref=f6e75]:
+            - listitem [ref=f6e76]:
+              - text: Konvertované z .ttf na .woff2 pomocou
+              - link "cloudconvert" [ref=f6e77] [cursor=pointer]:
+                - /url: https://cloudconvert.com/ttf-to-woff2
+  - contentinfo [ref=f6e78]:
+    - generic [ref=f6e79]:
+      - generic [ref=f6e80]:
+        - link "xpostaichuk@gmail.com" [ref=f6e81] [cursor=pointer]:
+          - /url: mailto:xpostaichuk@gmail.com
+        - text: ·
+        - link "+421 952 170 860" [ref=f6e82] [cursor=pointer]:
+          - /url: tel:+421952170860
+      - paragraph [ref=f6e83]:
+        - text: 2026 Pavlo Postaichuk ·
+        - link "Zdroje a podklady" [ref=f6e84] [cursor=pointer]:
+          - /url: map.html#sources

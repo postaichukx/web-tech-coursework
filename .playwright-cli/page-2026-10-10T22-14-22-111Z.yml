@@ -1,0 +1,64 @@
+- generic [active] [ref=f4e1]:
+  - link "Preskočiť na obsah" [ref=f4e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f4e3]:
+    - generic [ref=f4e4]:
+      - link "PP Pavlo Postaichuk Som študent aplikovanej informatiky na FEI STU." [ref=f4e5] [cursor=pointer]:
+        - /url: ../index.html
+        - generic [ref=f4e6]: PP
+        - generic [ref=f4e7]:
+          - strong [ref=f4e8]: Pavlo Postaichuk
+          - generic [ref=f4e9]: Som študent aplikovanej informatiky na FEI STU.
+      - navigation "Hlavná navigácia" [ref=f4e10]:
+        - list [ref=f4e11]:
+          - listitem [ref=f4e12]:
+            - link "Profil" [ref=f4e13] [cursor=pointer]:
+              - /url: ../index.html
+          - listitem [ref=f4e14]:
+            - link "Životopis" [ref=f4e15] [cursor=pointer]:
+              - /url: cv.html
+          - listitem [ref=f4e16]:
+            - link "Pracovné prostredie" [ref=f4e17] [cursor=pointer]:
+              - /url: workspace.html
+          - listitem [ref=f4e18]:
+            - link "Rozvrh" [ref=f4e19] [cursor=pointer]:
+              - /url: schedule.html
+          - listitem [ref=f4e20]:
+            - link "Kde ma nájdete" [ref=f4e21] [cursor=pointer]:
+              - /url: map.html
+  - main [ref=f4e22]:
+    - heading "Moje pracovné prostredie" [level=1] [ref=f4e23]
+    - paragraph [ref=f4e24]: Pri práci používam notebook a zápisník. Vyber si označený predmet a pozri sa, na čo mi slúži.
+    - region "Moje pracovné prostredie" [ref=f4e25]:
+      - generic [ref=f4e26]:
+        - img "Pracovný stôl s notebookom, zápisníkom, lampou a rastlinou" [ref=f4e27]
+        - generic [ref=f4e28]:
+          - radio "laptop" [checked] [ref=f4e29]
+          - generic [ref=f4e30] [cursor=pointer]: "1"
+          - generic [ref=f4e31]:
+            - heading "Laptop" [level=2] [ref=f4e32]
+            - paragraph [ref=f4e33]: Laptop používam na učenie HTML a CSS, tvorbu webových stránok a trávenie voľného času.
+        - generic [ref=f4e34]:
+          - radio "zapisnik" [ref=f4e35]
+          - generic [ref=f4e36] [cursor=pointer]: "2"
+        - generic [ref=f4e37]:
+          - radio "stolicka" [ref=f4e38]
+          - generic [ref=f4e39] [cursor=pointer]: "3"
+        - generic [ref=f4e40]:
+          - radio "soska" [ref=f4e41]
+          - generic [ref=f4e42] [cursor=pointer]: "4"
+        - generic [ref=f4e43]:
+          - radio "okno" [ref=f4e44]
+          - generic [ref=f4e45] [cursor=pointer]: "5"
+  - contentinfo [ref=f4e46]:
+    - generic [ref=f4e47]:
+      - generic [ref=f4e48]:
+        - link "xpostaichuk@gmail.com" [ref=f4e49] [cursor=pointer]:
+          - /url: mailto:xpostaichuk@gmail.com
+        - text: ·
+        - link "+421 952 170 860" [ref=f4e50] [cursor=pointer]:
+          - /url: tel:+421952170860
+      - paragraph [ref=f4e51]:
+        - text: © 2026 Pavlo Postaichuk ·
+        - link "Zdroje a podklady" [ref=f4e52] [cursor=pointer]:
+          - /url: map.html#sources

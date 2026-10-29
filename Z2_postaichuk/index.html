@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="sk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Porovnajte denné menu v okolí FEI STU na jednom mieste.">
+    <meta name="theme-color" content="#173b32">
+    <title>Obedové menu v okolí FEI STU</title>
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous" defer></script>
+    <script src="js/script.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Preskočiť na obsah</a>
+
+<header class="site-header">
+    <nav class="navbar navbar-expand-lg" aria-label="Hlavná navigácia">
+        <div class="container site-nav-inner">
+            <a class="navbar-brand brand" href="#top" aria-label="Obedové menu, domov">
+                <span class="brand-mark" aria-hidden="true">O</span>
+                <span>obedové<span class="brand-light">menu</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navigation"
+                    aria-controls="main-navigation" aria-expanded="false" aria-label="Otvoriť navigáciu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="main-navigation">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+                    <li class="nav-item"><a class="nav-link" href="#menu">Denné menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">O projekte</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Kontakt</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container hero" id="top">
+        <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> V okolí FEI STU · Bratislava</p>
+            <h1>Kam dnes<br><em>na obed?</em></h1>
+            <p class="hero-lead">Menu troch jedální, ceny a výber dňa. Porovnaj si, čo máš najbližšie.</p>
+            <a class="hero-link" href="#menu">Pozrieť menu <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero-decoration" aria-hidden="true"><span>obed</span></div>
+    </div>
+</header>
+
+<main id="main-content">
+    <section id="menu" class="menu-section" aria-labelledby="menu-heading">
+        <div class="container">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow section-kicker">TÝŽDENNÝ PREHĽAD</p>
+                    <h2 id="menu-heading">Dnešná ponuka<span class="heading-period">.</span></h2>
+                </div>
+                <div class="menu-tools">
+                    <span class="source-label"><span class="status-dot" aria-hidden="true"></span> Lokálne HTML kópie</span>
+                    <button id="refresh-menu" class="button-text" type="button" title="Znovu načítať uložené HTML kópie.">
+                        <span aria-hidden="true">↻</span> Aktualizovať menu
+                    </button>
+                    <button id="clear-menu" class="button-text button-muted" type="button">Vymazať cache</button>
+                </div>
+            </div>
+
+            <div class="menu-toolbar">
+                <nav class="day-navigation" aria-label="Výber dňa">
+                    <button type="button" class="day-button" data-day="Monday" aria-pressed="false">Po</button>
+                    <button type="button" class="day-button" data-day="Tuesday" aria-pressed="false">Ut</button>
+                    <button type="button" class="day-button" data-day="Wednesday" aria-pressed="false">St</button>
+                    <button type="button" class="day-button" data-day="Thursday" aria-pressed="false">Št</button>
+                    <button type="button" class="day-button" data-day="Friday" aria-pressed="false">Pi</button>
+                    <button type="button" class="day-button day-week" data-day="week" aria-pressed="false">Celý týždeň</button>
+                </nav>
+                <div class="selected-day-note">
+                    <span class="calendar-icon" aria-hidden="true">▦</span>
+                    <span id="selected-day-label">Načítavam deň…</span>
+                </div>
+            </div>
+
+            <div class="menu-status-row">
+                <p id="loading-message" class="loading-message" role="status" aria-live="polite" hidden>
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Načítavam menu…
+                </p>
+                <p id="page-message" class="page-message" role="status" aria-live="polite">Načítavam lokálne HTML kópie.</p>
+            </div>
+
+            <fieldset class="restaurant-filters">
+                <legend>Ukázať jedálne</legend>
+                <div id="restaurant-filters" class="filter-list">
+                    <span class="filter-placeholder">Filtre sa zobrazia po načítaní menu.</span>
+                </div>
+            </fieldset>
+
+            <div id="restaurant-status" class="restaurant-status" aria-live="polite"></div>
+            <div id="menu-content" class="restaurant-grid" aria-live="polite" aria-busy="false">
+                <div class="empty-state"><p>Menu sa pripravuje…</p></div>
+            </div>
+
+            <p class="allergen-note"><span aria-hidden="true">ⓘ</span> Alergény sú uvedené podľa údajov zverejnených jednotlivými jedálňami. Pri nejasnostiach si ich, prosím, over priamo v prevádzke.</p>
+        </div>
+    </section>
+
+    <section id="about" class="about-section" aria-labelledby="about-heading">
+        <div class="container about-grid">
+            <div class="about-intro">
+                <p class="eyebrow section-kicker">AKO TO FUNGUJE</p>
+                <h2 id="about-heading">Menej hľadania.<br><em>Viac času na obed.</em></h2>
+                <p>Stránka načíta uložené HTML kópie webových stránok jedální, prevedie menu do jednotného formátu a zobrazí ho vedľa seba. Pri ďalšej návšteve použije spracované údaje uložené v prehliadači.</p>
+            </div>
+            <div class="about-details">
+                <div class="about-block">
+                    <h3>Použité zdroje</h3>
+                    <ul id="source-list" class="source-list">
+                        <li><a href="https://eatandmeet.sk/tyzdenne-menu" target="_blank" rel="noopener noreferrer">Eat &amp; Meet — týždenné menu</a></li>
+                        <li><a href="https://www.restauracia-drag.sk/restauracia-drag" target="_blank" rel="noopener noreferrer">Reštaurácia DRAG — denné menu</a></li>
+                        <li><a href="https://whitedragon.sk/menucka/" target="_blank" rel="noopener noreferrer">White Dragon — týždenné obedové menu</a></li>
+                    </ul>
+                </div>
+                <div class="about-block">
+                    <h3>Použité knižnice</h3>
+                    <ul id="library-list" class="library-list">
+                        <li><a href="https://getbootstrap.com/docs/5.3/" target="_blank" rel="noopener noreferrer">Bootstrap 5.3</a> — responzívna mriežka a ovládacie prvky</li>
+                        <li><a href="https://jquery.com/" target="_blank" rel="noopener noreferrer">jQuery 3.7.1</a> — obsluha udalostí formulára a filtrov</li>
+                        <li>DOMParser, Fetch API, localStorage — vstavané rozhrania prehliadača</li>
+                    </ul>
+                </div>
+                <div class="about-footnote">
+                    <span class="about-footnote-icon" aria-hidden="true">↗</span>
+                    <p>Jedálny lístok sa môže zmeniť. Pred návštevou si over aktuálnu ponuku priamo u prevádzky.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section" aria-labelledby="contact-heading">
+        <div class="container contact-grid">
+            <div class="contact-intro">
+                <p class="eyebrow section-kicker">MÁŠ TIP ALEBO OTÁZKU?</p>
+                <h2 id="contact-heading">Napíš nám<span class="heading-period">.</span></h2>
+                <p>Pošli nám správu — formulár zobrazí potvrdenie po odoslaní.</p>
+            </div>
+            <form id="contact-form" class="contact-form">
+                <div class="form-field">
+                    <label for="contact-name">Meno</label>
+                    <input class="form-control" id="contact-name" name="name" type="text" autocomplete="name" required>
+                </div>
+                <div class="form-field">
+                    <label for="contact-email">E-mail</label>
+                    <input class="form-control" id="contact-email" name="email" type="email" autocomplete="email" required>
+                </div>
+                <div class="form-field">
+                    <label for="contact-message">Správa</label>
+                    <textarea class="form-control" id="contact-message" name="message" rows="4" required></textarea>
+                </div>
+                <button class="button-primary" type="submit">Odoslať správu <span aria-hidden="true">↗</span></button>
+                <p id="contact-feedback" class="contact-feedback" role="status" aria-live="polite"></p>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true">O</span><span>obedové<span class="brand-light">menu</span></span></a>
+        <p>WEBTE1 Zadanie 2 · FEI STU · 2026</p>
+        <a class="back-to-top" href="#top">Späť hore ↑</a>
+    </div>
+</footer>
+</body>
+</html>

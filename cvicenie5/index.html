@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Malý obchod</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <main>
+    <h1>Malý obchod</h1>
+    <p>Ukážka DOM, referencií, closure a asynchrónneho JavaScriptu.</p>
+
+    <section class="panel" aria-labelledby="products-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="products-heading">Produkty</h2>
+          <p id="status" role="status" aria-live="polite">Produkty sa načítavajú…</p>
+        </div>
+        <button id="reload" type="button">Načítať produkty</button>
+      </div>
+
+      <ul id="products" class="products"></ul>
+    </section>
+
+    <section class="panel cart" aria-labelledby="cart-heading">
+      <div class="section-heading">
+        <h2 id="cart-heading">Košík</h2>
+        <button id="discount" type="button">Zľava 10 %</button>
+      </div>
+
+      <p>Počet položiek: <strong id="cart-count">0</strong></p>
+      <p>Celková cena: <strong><span id="cart-total">0.00</span> €</strong></p>
+      <p id="discount-state" class="muted">Zľava nie je zapnutá.</p>
+      <ul id="cart-items" class="cart-items"></ul>
+    </section>
+
+    <section class="panel" aria-labelledby="event-loop-heading">
+      <h2 id="event-loop-heading">Bonus: poradie event loop</h2>
+      <p>Spustite ukážku a sledujte poradie synchronného kódu, mikroúlohy a úlohy.</p>
+      <button id="event-loop-demo" type="button">Spustiť ukážku</button>
+      <pre id="event-log" class="event-log" aria-live="polite">Zatiaľ nič.</pre>
+    </section>
+  </main>
+</body>
+</html>

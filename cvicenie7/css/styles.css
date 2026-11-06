@@ -1,0 +1,47 @@
+:root {
+  --color-brand: #1d6f8a;
+}
+
+body {
+  background: #f7fafb;
+}
+
+h1 {
+  color: var(--color-brand);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+button#refresh {
+  padding: 0.4rem 0.8rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--color-brand);
+  color: #fff;
+  cursor: pointer;
+}
+
+button#refresh:disabled {
+  opacity: 0.5;
+  cursor: progress;
+}
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 3px solid #f1a331;
+  outline-offset: 3px;
+}
+
+.card {
+  border-color: #d5e0e5;
+}
+
+.card-header a {
+  color: var(--color-brand);
+}

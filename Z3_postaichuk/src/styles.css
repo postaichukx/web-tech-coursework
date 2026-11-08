@@ -1,0 +1,43 @@
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #193229;
+  background: #f6f5ef;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+.page { min-height: 100vh; display: flex; flex-direction: column; }
+.container { width: min(100% - 2.5rem, 960px); margin-inline: auto; }
+.site-header { padding: 3.25rem 0 2.75rem; color: #fff; background: #173f35; }
+.eyebrow { margin: 0 0 .75rem; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+h1 { margin: 0; font-size: clamp(2.2rem, 7vw, 3.8rem); line-height: 1.1; }
+.intro { margin: .75rem 0 0; color: #d1e4d7; }
+.main-content { flex: 1; padding-block: 2.5rem 4rem; }
+h2 { margin: 0 0 .7rem; font-size: 1.4rem; }
+p { line-height: 1.55; }
+.access-form { margin-top: 1.5rem; }
+label { display: block; margin-bottom: .45rem; font-weight: 650; }
+.form-row { display: flex; flex-wrap: wrap; gap: .65rem; }
+input { flex: 1 1 16rem; min-width: 0; padding: .75rem .9rem; border: 1px solid #9eb8aa; border-radius: .4rem; background: #fff; }
+button { padding: .75rem 1.15rem; border: 0; border-radius: .4rem; background: #176463; color: #fff; font-weight: 700; }
+button:hover:not(:disabled) { background: #104a32; }
+button:disabled { cursor: wait; opacity: .65; }
+button:focus-visible, input:focus-visible { outline: 3px solid #c28225; outline-offset: 3px; }
+.message { margin-top: 1rem; }
+.error { color: #a22b20; }
+.tasks { margin-top: 3rem; }
+.task-list { display: grid; gap: 0; margin: 1.25rem 0 0; padding: 0; list-style: none; border-top: 1px solid #d6dfd6; }
+.task { display: flex; padding: 1.2rem 0; border-bottom: 1px solid #d6dfd6; }
+.task strong { display: block; margin-bottom: .4rem; font-size: 1.1rem; }
+.task span { display: inline-block; margin-bottom: .35rem; color: #416453; font-weight: 650; }
+.task p { margin: .4rem 0; }
+.task small { color: #4d6255; }
+.site-footer { padding: 1.3rem 0; border-top: 1px solid #d6dfd6; font-size: .85rem; color: #52665a; }
+
+@media (max-width: 480px) {
+  .site-header { padding-block: 2.5rem; }
+  .form-row button { width: 100%; }
+}

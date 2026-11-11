@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="data:,">
+  <!-- Допомагає мобільному браузеру використовувати справжню ширину екрана. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSON a pauza animácie — ukážka</title>
+  <style>
+    /* У width/height враховуємо padding і border, щоб легше рахувати розміри. */
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-content: center; /* Центруємо групу: заголовок, підказка, сітка. */
+      gap: 1rem;
+      padding: 1rem;
+      font: 1rem system-ui, sans-serif;
+      background: #f5f2ea;
+    }
+
+    h1, p { margin: 0; text-align: center; }
+
+    .grid {
+      --cols: 6; /* Початкове значення. JS замінить його числом із JSON. */
+      display: grid;
+      grid-template-columns: repeat(var(--cols), 1fr);
+      /* Кількість рядків JS задасть окремо через gridTemplateRows. */
+      gap: 3px;
+      width: min(82vw, 58vh, 520px); /* Сітка поміститься і на вузькому екрані. */
+      aspect-ratio: 1;
+      padding: 3px;
+      background: #203a5a; /* Запасний колір до того, як JS прочитає JSON. */
+      cursor: pointer;
+    }
+
+    .cell {
+      min-width: 0;
+      min-height: 0;
+      background: #e9e5d9;
+      /* Назва анімації pulse; 1.4s — тривалість; infinite — безкінечне повторення;
+         alternate — кожен другий цикл іде від кінця до початку. */
+      animation: pulse 1.4s ease-in-out infinite alternate;
+      /* Кожна клітинка отримує свій --index від JS, тому старт зсунений.
+         Від'ємна затримка починає анімацію ніби частина часу вже минула. */
+      animation-delay: calc(var(--index) * -55ms);
+    }
+
+    /* Клас is-paused JS додає/знімає на контейнері.
+       Стан анімації міняємо саме на .cell, бо анімація задана їй. */
+    .grid.is-paused .cell { animation-play-state: paused; }
+
+    /* Видима рамка для людини, яка керує сторінкою клавіатурою. */
+    .grid:focus-visible { outline: 3px solid #111; outline-offset: 4px; }
+
+    @keyframes pulse {
+      from { opacity: .15; transform: scale(.55); }
+      to   { opacity: 1;   transform: scale(1); }
+    }
+
+    /* Якщо в системі попросили менше руху, сповільнюємо анімацію. */
+    @media (prefers-reduced-motion: reduce) {
+      .cell { animation-duration: 4s; }
+    }
+  </style>
+</head>
+<body>
+  <h1>JSON: náhodná mriežka</h1>
+  <!-- JS замінить цей початковий текст, коли дані будуть готові. -->
+  <p id="info">Načítava sa…</p>
+  <!-- Сітка спочатку порожня: її клітинки створить JavaScript.
+       id="grid" потрібен для пошуку в JS, class="grid" — для CSS.
+       role="button" і tabindex="0" роблять елемент доступним з клавіатури.
+       aria-pressed повідомляє озвучувачу, чи стоїть анімація на паузі. -->
+  <div id="grid" class="grid" role="button" tabindex="0" aria-pressed="false"
+       aria-label="Zastaviť alebo spustiť animáciu"></div>
+
+  <!-- Скрипт стоїть після HTML, тому #grid і #info вже існують, коли він запуститься. -->
+  <script>
+    // Це локальні демонстраційні дані з такою самою структурою, як table.json.
+    // Браузер часто забороняє fetch для file://. Тоді приклад усе одно працює.
+    // Якщо на пісомці дадуть інший JSON, його поля треба спочатку оглянути.
+    const offlineTable = [
+      { rows: 6, columns: 6, background: '#203a5a' },
+      { rows: 8, columns: 8, background: '#583d72' },
+      { rows: 10, columns: 10, background: '#355d46' }
+    ];
+
+    // querySelector повертає перший елемент із потрібним CSS-селектором.
+    const grid = document.querySelector('#grid');
+    const info = document.querySelector('#info');
+
+    // config — один об'єкт з масиву, наприклад { rows: 6, columns: 6, ... }.
+    function draw(config) {
+      // CSS-змінну --cols використовує grid-template-columns у стилях вище.
+      grid.style.setProperty('--cols', config.columns);
+      grid.style.backgroundColor = config.background;
+      grid.style.gridTemplateRows = `repeat(${config.rows}, 1fr)`;
+      // Наприклад, config.rows = 6 дає рядок CSS "repeat(6, 1fr)".
+      // `...` — шаблонний рядок; ${...} вставляє значення змінної.
+
+      // При повторному виклику draw старі клітинки не повинні залишитися.
+      grid.replaceChildren();
+      // Для 6 × 6 потрібно рівно 36 клітинок. i пробігає 0, 1, ..., 35.
+      // Умова i < 36 зупиняє цикл перед 36; i <= 36 створила б 37 клітинок.
+      for (let i = 0; i < config.rows * config.columns; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell'; // Підключає CSS-правило .cell.
+        cell.style.setProperty('--index', i); // Зсуває анімацію цієї клітинки.
+        grid.append(cell); // Додає новий div усередину #grid.
+      }
+
+      info.textContent = `${config.rows} × ${config.columns} — klikni na mriežku: pauza / pokračovať`;
+    }
+
+    function toggleAnimation() {
+      // toggle додає клас, якщо його немає, і знімає, якщо він уже є.
+      // Він повертає true після додавання і false після зняття класу.
+      const paused = grid.classList.toggle('is-paused');
+      grid.setAttribute('aria-pressed', String(paused));
+      info.textContent = `${grid.children.length} polí — ${paused ? 'pauza' : 'animácia beží'}`;
+      // Умова ? A : B означає: якщо paused=true, візьми A; інакше B.
+    }
+
+    // ВАЖЛИВО: передаємо назву функції без (). Так вона виконається ПІСЛЯ кліку.
+    grid.addEventListener('click', toggleAnimation);
+    // Enter і пробіл роблять те саме для користувача клавіатури.
+    grid.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault(); // Пробіл не прокручуватиме сторінку.
+        toggleAnimation();
+      }
+    });
+
+    // async дозволяє чекати мережеву відповідь через await.
+    async function loadTable() {
+      try {
+        // ./table.json означає "файл table.json поруч із цим HTML".
+        const response = await fetch('./table.json');
+        // fetch НЕ вважає HTTP 404 винятком: статус треба перевірити окремо.
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json(); // Перетворюємо JSON-текст на масив JS.
+        if (!Array.isArray(data) || data.length === 0) throw new Error('Empty table');
+        return data;
+      } catch (error) {
+        // Сюди потрапляємо при помилці fetch, HTTP, JSON або порожньому масиві.
+        // Для file:// це дає змогу працювати без сервера; помилку видно в Console.
+        console.info('Using embedded offline data:', error);
+        return offlineTable;
+      }
+    }
+
+    // loadTable() повертає Promise. .then запускається, коли дані вже отримані.
+    loadTable().then(table => {
+      // Перевіряємо дані до використання в CSS і циклі. Інакше, наприклад,
+      // rows = 100000 створить надто багато DOM-елементів.
+      const valid = table.filter(x => Number.isInteger(x.rows) && x.rows > 0 && x.rows <= 30 &&
+        Number.isInteger(x.columns) && x.columns > 0 && x.columns <= 30 &&
+        CSS.supports('background-color', x.background));
+      // filter повертає новий масив лише із записів, для яких умова = true.
+      // && означає "і": усі перевірки мають бути правдивими.
+      if (!valid.length) {
+        info.textContent = 'Neplatné údaje v JSON.';
+        return; // Немає коректного варіанта — не запускаємо draw.
+      }
+
+      // Math.random() дає число від 0 включно до 1 не включно.
+      // Після множення на valid.length і Math.floor маємо цілий індекс
+      // від 0 до valid.length - 1. Вибираємо ОДИН РАЗ при завантаженні.
+      const chosen = valid[Math.floor(Math.random() * valid.length)];
+      draw(chosen);
+      // Клік вище лише ставить паузу; новий розмір обирається після refresh/F5.
+    });
+  </script>
+</body>
+</html>

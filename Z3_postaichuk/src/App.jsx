@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import {deleteTodo, doneTodo, editTodo, getTodos, resetTodo, undoneTodo} from './services/todosApi.js'
 import { createTodo } from './services/todosApi.js'
-import {formatRange} from "@fullcalendar/core";
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+
 
 export default function App() {
   const [name, setName] = useState('')

@@ -1,0 +1,133 @@
+:root {
+    --text: #18324a;
+    --accent: #0b7285;
+    --error: #b42318;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f4f6f7;
+    color: var(--text);
+    font: 16px/1.5 Arial, sans-serif;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+#status.is-error {
+    color: var(--error);
+    font-weight: bold;
+}
+
+#simulate-404 {
+    max-width: 100%;
+    padding: 10px 16px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    background: white;
+    color: var(--accent);
+    font: inherit;
+    cursor: pointer;
+}
+
+#simulate-404:hover {
+    background: var(--accent);
+    color: white;
+}
+
+#filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 24px 0;
+}
+
+#filters label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid #ccd4d9;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+}
+
+#filters label:hover {
+    border-color: var(--accent);
+    background: #e8f5f6;
+}
+
+#filters input {
+    accent-color: var(--accent);
+}
+
+#program {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.film-card {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid #d5dce0;
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    background: white;
+}
+
+.film-card h2 {
+    margin: 0 0 12px;
+    font-size: 1.3rem;
+    overflow-wrap: anywhere;
+}
+
+.film-card ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.film-card li:last-child {
+    margin-top: 8px;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.film-card .price-missing {
+    color: #69757c;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.film-card[hidden] {
+    display: none;
+}
+
+#simulate-404:focus-visible,
+#filters input:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    main {
+        padding: 16px;
+    }
+
+    #program {
+        grid-template-columns: 1fr;
+    }
+}

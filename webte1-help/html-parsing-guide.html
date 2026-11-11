@@ -1,0 +1,154 @@
+<!doctype html><html lang="uk"><head><meta charset="utf-8"><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width, initial-scale=1"><title>HTML-парсинг — порядок дій</title><style>
+* { box-sizing: border-box; }
+body { max-width: 900px; margin: auto; padding: 16px; font: 16px/1.5 system-ui, sans-serif; }
+section { border-top: 1px solid #aaa; padding: 1rem 0; }
+pre { padding: 12px; overflow-x: auto; border: 1px solid #aaa; background: #f5f5f5; font: 14px/1.45 ui-monospace, monospace; }
+code { font-family: ui-monospace, monospace; }
+nav a { display: block; margin: .25rem 0; }
+.action { font-weight: 700; }
+</style></head><body id="top">
+<h1>HTML-парсинг: порядок дій під час пісомки</h1>
+<p>Ця інструкція не потребує жодного прикладового файла поруч. Код нижче використовує структуру з твого <code>cvicenie6/source/kino-hviezda.html</code>; потрібний фрагмент HTML наведений у кроці 2. Коли на пісомці дадуть інший файл, змінюй селектори відповідно до нього. <a href="./sources.html">Усі готові блоки дій — у Sources</a>.</p>
+<p><strong>Маршрут:</strong> адреса джерела → структура → селектори → текст → об’єкти → перевірка → показ → інтерактивність.</p>
+<nav aria-label="Кроки">
+<a href="#step-1">1. Визнач, де саме лежать дані</a>
+<a href="#step-2">2. Спочатку знайди повторювану структуру</a>
+<a href="#step-3">3. Перевір селектори, перш ніж писати парсер</a>
+<a href="#step-4">4. Якщо потрібен fetch, читай HTML як текст</a>
+<a href="#step-5">5. Перетвори текст на окремий DOM-документ</a>
+<a href="#step-6">6. Нормалізуй текст</a>
+<a href="#step-7">7. Число з ціни: кома, знак € і відсутнє значення</a>
+<a href="#step-8">8. Читай поля всередині ОДНОГО запису</a>
+<a href="#step-9">9. Склади дані в об’єкти, а не в HTML-рядки</a>
+<a href="#step-10">10. Перевір об’єкти до створення CSS та фільтрів</a>
+<a href="#step-11">11. Покажи дані безпечно</a>
+<a href="#step-12">12. Лише потім додавай фільтри, кнопки й CSS</a>
+<a href="#step-13">13. Якщо отримав порожню сторінку: порядок діагностики</a>
+<a href="#step-14">14. Остання перевірка перед здачею</a>
+</nav>
+<section id="step-1"><h2>1. Визнач, де саме лежать дані</h2><p class="action">Дія: Відкрий наданий HTML і знайди, чи дані вже всередині поточної сторінки, чи умова дає окрему адресу HTML.</p><p>Якщо дані є у відкритому DOM, читай document. Якщо потрібно завантажити HTML як у Z2, роби fetch за реальною браузерною адресою. /public_html у FileZilla — каталог на сервері, не частина URL для fetch.</p>
+<pre><code>// ВАРІАНТ А: дані є у відкритому HTML
+const doc = document;
+
+// ВАРІАНТ Б: треба завантажити цей самий HTML через fetch
+const sourceUrl = location.pathname;
+
+// ВАРІАНТ В: окремий HTML — візьми ТОЧНУ адресу з умови,
+// а не вигадану назву файлу.</code></pre>
+<p><strong>Контроль:</strong> У Network адреса запиту має відкритися зі статусом 200. При file:// запусти локальний/шкільний сервер.</p>
+</section>
+<section id="step-2"><h2>2. Спочатку знайди повторювану структуру</h2><p class="action">Дія: Відкрий HTML-код. Познач зовнішній блок одного дня або картки, потім поля всередині нього.</p><p>У твоєму cvicenie6/source/kino-hviezda.html повторюється section.den, усередині нього li.film. Це реальний зразок із твоїх матеріалів. На пісомці класи можуть називатися інакше, тому не копіюй їх без перевірки.</p>
+<pre><code>&lt;section class=&quot;den&quot;&gt;
+  &lt;h2&gt;Pondelok &lt;small&gt;2. 11.&lt;/small&gt;&lt;/h2&gt;
+  &lt;ul class=&quot;filmy&quot;&gt;
+  &lt;li class=&quot;film&quot;&gt;
+    &lt;span class=&quot;cas&quot;&gt;17:30&lt;/span&gt;
+    &lt;a class=&quot;nazov&quot;&gt;Robot Ferko zachraňuje svet&lt;/a&gt;
+    &lt;span class=&quot;cena&quot;&gt;5,90 €&lt;/span&gt;
+  &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;</code></pre>
+<p><strong>Контроль:</strong> Запиши на папері або в коментарі: група .den; запис .film; поля .cas, .nazov, .cena.</p>
+</section>
+<section id="step-3"><h2>3. Перевір селектори, перш ніж писати парсер</h2><p class="action">Дія: У Console перевір кількість знайдених блоків. Підстав класи з наданого HTML.</p><p>querySelector знаходить перший елемент або null. querySelectorAll дає всі збіги. Якщо результат 0, наступний код не допоможе, поки не виправиш селектор.</p>
+<pre><code>console.log(document.querySelectorAll(&quot;.den&quot;).length);
+console.log(document.querySelector(&quot;.den&quot;)?.querySelectorAll(&quot;.film&quot;).length);</code></pre>
+<p><strong>Контроль:</strong> Для знайомого файлу cvicenie6 результат має бути більше нуля; для іншого файлу орієнтуйся на його реальну структуру.</p>
+</section>
+<section id="step-4"><h2>4. Якщо потрібен fetch, читай HTML як текст</h2><p class="action">Дія: В async-функції завантаж точний URL і перевір response.ok.</p><p>fetch не кидає виняток при HTTP 404. response.text() дає рядок, з яким ще не можна працювати як із DOM.</p>
+<pre><code>async function loadHtml(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return await response.text();
+}
+// Для того самого HTML: const html = await loadHtml(location.pathname);</code></pre>
+<p><strong>Контроль:</strong> Постав console.log(html.slice(0, 100)): має починатися HTML, а не повідомленням про помилку.</p>
+</section>
+<section id="step-5"><h2>5. Перетвори текст на окремий DOM-документ</h2><p class="action">Дія: Після await loadHtml(...) виклич DOMParser.</p><p>Тепер doc підтримує querySelector/querySelectorAll. Якщо дані вже в поточній сторінці й fetch не потрібен, doc = document — цей крок пропускаєш.</p>
+<pre><code>const html = await loadHtml(location.pathname);
+const doc = new DOMParser().parseFromString(html, &quot;text/html&quot;);
+console.log(doc.querySelectorAll(&quot;.den&quot;).length);</code></pre>
+<p><strong>Контроль:</strong> Кількість знайдених груп має бути такою самою, як при огляді вихідного HTML.</p>
+</section>
+<section id="step-6"><h2>6. Нормалізуй текст</h2><p class="action">Дія: Оголоси cleanText один раз перед функцією парсингу.</p><p>У HTML між словами бувають переноси, табуляція і нерозривні пробіли. textContent бере їх усі. Ця функція приводить текст до одного пробілу між словами.</p>
+<pre><code>function cleanText(value) {
+  return String(value ?? &quot;&quot;).replace(/\u00a0/g, &quot; &quot;).replace(/\s+/g, &quot; &quot;).trim();
+}</code></pre>
+<p><strong>Контроль:</strong> cleanText(&quot;  Robot   Ferko
+ zachraňuje svet &quot;) має дати &quot;Robot Ferko zachraňuje svet&quot;.</p>
+</section>
+<section id="step-7"><h2>7. Число з ціни: кома, знак € і відсутнє значення</h2><p class="action">Дія: Оголоси parsePrice поруч із cleanText.</p><p>Зберігай ціну як число, щоб її можна було сортувати та підсумовувати. Якщо її не вказано, поверни null; це не те саме, що 0.</p>
+<pre><code>function parsePrice(value) {
+  const text = cleanText(value).replace(&quot;,&quot;, &quot;.&quot;);
+  const match = text.match(/\d+(?:\.\d+)?/);
+  return match ? Number(match[0]) : null;
+}
+// &quot;5,90 €&quot; → 5.9; &quot;Cena neuvedená&quot; → null</code></pre>
+<p><strong>Контроль:</strong> Number(&quot;5,90 €&quot;) дає NaN; parsePrice(&quot;5,90 €&quot;) дає 5.9.</p>
+</section>
+<section id="step-8"><h2>8. Читай поля всередині ОДНОГО запису</h2><p class="action">Дія: У циклі по .film викликай film.querySelector, не doc.querySelector.</p><p>Інакше кожний запис може отримати назву або ціну першого фільму в документі. ?. дозволяє обробити відсутню ціну.</p>
+<pre><code>function textOf(parent, selector) {
+  return cleanText(parent.querySelector(selector)?.textContent);
+}
+for (const film of section.querySelectorAll(&quot;.film&quot;)) {
+  const time = textOf(film, &quot;.cas&quot;);
+  const title = textOf(film, &quot;.nazov&quot;);
+  const price = parsePrice(textOf(film, &quot;.cena&quot;));
+  console.log({ time, title, price });
+}</code></pre>
+<p><strong>Контроль:</strong> На кожному рядку в Console повинні бути різні назви й часи.</p>
+</section>
+<section id="step-9"><h2>9. Склади дані в об’єкти, а не в HTML-рядки</h2><p class="action">Дія: У функції parseProgram(doc) обійди групи, потім записи кожної групи.</p><p>Такі об’єкти легко фільтрувати й перевіряти. Пропускай запис без обов’язкових полів. День із нулем записів може бути коректним — у cvicenie6 є закритий день.</p>
+<pre><code>function parseProgram(doc) {
+  const days = [];
+  for (const section of doc.querySelectorAll(&quot;.den&quot;)) {
+    const h2 = section.querySelector(&quot;h2&quot;);
+    const day = cleanText(h2?.firstChild?.textContent);
+    const date = textOf(section, &quot;h2 small&quot;);
+    const films = [];
+    for (const film of section.querySelectorAll(&quot;.film&quot;)) {
+      const time = textOf(film, &quot;.cas&quot;);
+      const title = textOf(film, &quot;.nazov&quot;);
+      if (!time || !title) continue;
+      films.push({ time, title, price: parsePrice(textOf(film, &quot;.cena&quot;)) });
+    }
+    days.push({ day, date, films });
+  }
+  if (!days.length) throw new Error(&quot;Не знайдено жодної групи: перевір селектор&quot;);
+  return days;
+}</code></pre>
+<p><strong>Контроль:</strong> Після виклику має бути масив днів; усередині кожного — масив films.</p>
+</section>
+<section id="step-10"><h2>10. Перевір об’єкти до створення CSS та фільтрів</h2><p class="action">Дія: Виклич парсер і виведи плоску таблицю в Console.</p><p>Так одразу видно порожню назву, некоректну ціну або неправильне групування. Коли дані неправильні, спершу виправ селектори й очищення.</p>
+<pre><code>const days = parseProgram(doc);
+console.table(days.flatMap(d =&gt; d.films.map(f =&gt; ({ day: d.day, ...f }))));
+console.log(&quot;Днів:&quot;, days.length);
+console.log(&quot;Фільмів:&quot;, days.reduce((n, d) =&gt; n + d.films.length, 0));</code></pre>
+</section>
+<section id="step-11"><h2>11. Покажи дані безпечно</h2><p class="action">Дія: У render(days) створи елементи для видимої сторінки.</p><p>textContent показує витягнутий текст як текст. Не вставляй чужий HTML через innerHTML. Якщо в завданні вже є #results, використовуй його; інакше створи контейнер.</p>
+<pre><code>const results = document.querySelector(&quot;#results&quot;) ?? document.body.appendChild(document.createElement(&quot;div&quot;));
+results.id = &quot;results&quot;;
+results.replaceChildren();
+for (const day of days) {
+  const heading = document.createElement(&quot;h2&quot;);
+  heading.textContent = `${day.day} ${day.date}`;
+  results.append(heading);
+  for (const film of day.films) {
+    const p = document.createElement(&quot;p&quot;);
+    p.textContent = `${film.time} — ${film.title} — ${film.price ?? &quot;cena neuvedená&quot;}`;
+    results.append(p);
+  }
+}</code></pre>
+<p><strong>Контроль:</strong> Після повторного виклику не повинно з’явитися дубльованих записів: replaceChildren очищує попередній результат.</p>
+</section>
+<section id="step-12"><h2>12. Лише потім додавай фільтри, кнопки й CSS</h2><p class="action">Дія: Відкрий Sources через посилання вгорі: окремі рецепти для фільтра дня, пошуку, підтвердження, модального вікна, сортування та адаптивного Grid.</p><p>Зберігай початкові об’єкти у стані; при зміні фільтра обчисли видимі записи й перемалюй їх. Не видаляй дані з оригінального масиву.</p>
+</section>
+<section id="step-13"><h2>13. Якщо отримав порожню сторінку: порядок діагностики</h2><p class="action">Дія: Перевір Console і Network саме в такому порядку.</p><p>1) Чи завантажився script.js? 2) Чи отримав fetch HTTP 200? 3) Чи doc містить очікуваний блок? 4) Скільки груп і записів повертають селектори? 5) Чи правильний масив об’єктів? 6) Чи render отримав цей масив? Не виправляй CSS, якщо даних немає.</p>
+<pre><code>console.log(&quot;JS запустився&quot;);
+console.log(&quot;Груп:&quot;, doc.querySelectorAll(&quot;.den&quot;).length);
+console.log(&quot;Записів:&quot;, doc.querySelectorAll(&quot;.film&quot;).length);
+console.table(days);</code></pre>
+</section>
+<section id="step-14"><h2>14. Остання перевірка перед здачею</h2><p class="action">Дія: Перевір широку й вузьку ширину, усі кнопки, порожній стан, відсутню ціну та Console без несподіваних помилок.</p><p>У коді немає Vue, React, Bootstrap, jQuery або CDN. Усі шляхи до файлів походять із наданого завдання чи з location.pathname, а не з вигаданого прикладу. Якщо парсиш HTML із іншою структурою, селектори змінені відповідно до нього.</p>
+</section>
+<p><a href="#top">На початок</a> · <a href="./sources.html">Sources</a></p></body></html>

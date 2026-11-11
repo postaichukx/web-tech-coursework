@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="data:,">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Z2 — простий приклад HTML-парсингу</title>
+  <link rel="stylesheet" href="./z2-simple.css">
+  <script src="./z2-simple.js" defer></script>
+</head>
+<body>
+  <p><a href="./index.html">← Робочі інструкції</a> · <a href="./sources.html">Sources</a></p>
+  <h1>Z2: простий приклад Eat &amp; Meet</h1>
+  <p>Ця сторінка читає <a href="./eat-and-meet-example.html">окремий HTML-файл джерела</a>, витягує з нього назву, категорію та першу ціну кожної страви й показує меню. Файл джерела спрощений, але його класи повторюють важливу структуру твого Z2. Жодних бібліотек.</p>
+
+  <p id="status" role="status">Načítava sa…</p>
+  <nav id="days" aria-label="Výber dňa"></nav>
+  <div id="menu"></div>
+
+  <h2>Що тут відбувається</h2>
+  <ol>
+    <li><a href="./z2-simple.js">z2-simple.js</a> виконує <code>fetch("./eat-and-meet-example.html")</code> і перевіряє HTTP-статус.</li>
+    <li><code>DOMParser</code> перетворює отриманий текст на документ. Для кожного блоку <code>[id^="day-"]</code> знаходяться страви <code>.menu-details</code>.</li>
+    <li>У кожній страві <code>.menu-title h4</code> — категорія, <code>.menu-description p.desc</code> — назва, <code>.menu-title .price</code> — ціна. Якщо там дві ціни, приклад бере першу.</li>
+    <li>Кнопки дня змінюють <code>selectedDay</code>, а <code>render()</code> показує відповідні страви через <code>createElement</code> і <code>textContent</code>.</li>
+    <li><a href="./z2-simple.css">z2-simple.css</a> задає лише базову сітку: дві колонки, на вузькому екрані одна.</li>
+  </ol>
+  <p><strong>Куди дивитися в коді:</strong> почни з HTML-джерела, знайди <code>#day-1</code> та <code>.menu-details</code>, потім у JS прочитай <code>loadDays()</code> і <code>render()</code>. Для іншого HTML-файлу селектори треба змінити за його реальною структурою.</p>
+  <p>Відкривай через локальний або шкільний HTTP-сервер: <code>fetch</code> при <code>file://</code> може бути заблокований.</p>
+</body>
+</html>

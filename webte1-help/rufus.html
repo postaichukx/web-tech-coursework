@@ -1,0 +1,114 @@
+<!doctype html>
+<!-- lang описує мову тексту сторінки для браузера й озвучувачів. -->
+<html lang="sk">
+<head>
+  <!-- UTF-8 потрібне, щоб слова з діакритикою відображалися правильно. -->
+  <meta charset="utf-8">
+  <!-- Порожня іконка прибирає зайвий запит favicon.ico; зовнішніх файлів не потрібно. -->
+  <link rel="icon" href="data:,">
+  <!-- Без viewport телефон може вдавати широкий екран, і мобільний @media не спрацює як очікуємо. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS Grid, hover a mobilné poradie — ukážka</title>
+  <style>
+    /* Зазвичай width рахує лише вміст. border-box включає також padding і border.
+       Завдяки цьому контейнер width: 550px не стане ширшим через внутрішній відступ. */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;               /* Браузер за замовчуванням додає поля до body. */
+      min-height: 100vh;       /* 100vh = висота вікна браузера. */
+      display: grid;
+      place-items: center;     /* Центруємо єдиний дочірній елемент по двох осях. */
+      padding: 25px;          /* Відступ самої дошки від краю вікна. */
+      font: 1.5rem system-ui, sans-serif;
+      background: #f4f0e8;
+    }
+
+    .board {
+      /* CSS-змінні успадковуються дочірніми елементами. --normal і --hover —
+         два кольори для поточної ширини екрана; --square-bg — активний колір. */
+      --normal: #22577a;
+      --hover: #c95735;
+      --square-bg: var(--normal);
+
+      display: grid;
+      /* repeat(4, ...) = чотири однакові колонки. 1fr = одна частка вільного місця.
+         minmax(0, 1fr) дозволяє колонкам звужуватися без переповнення. */
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;              /* Відстань МІЖ квадратами; відстань до рамки дає padding. */
+      width: min(100%, 550px);/* Не ширше 550px і не ширше доступного місця. */
+      padding: 25px;          /* Від рамки контейнера до найближчого квадрата — 25px. */
+      border: 1px solid #222;
+      background: white;
+    }
+
+    /* :hover спрацьовує, коли миша перебуває над контейнером АБО його дітьми.
+       Міняємо тільки змінну; новий колір успадкують усі 16 квадратів. */
+    .board:hover {
+      --square-bg: var(--hover);
+    }
+
+    .square {
+      display: grid;
+      place-items: center;     /* Центруємо цифру всередині квадрата. */
+      aspect-ratio: 1;         /* Ширина і висота однакові: отримуємо квадрат. */
+      min-width: 0;
+      background: var(--square-bg); /* Значення береться з найближчого предка .board. */
+      color: white;            /* Колір цифри; він не впливає на --square-bg. */
+      font-weight: 700;
+      /* Рамка має 2px ще ДО hover. При наведенні міняємо лише її колір,
+         тому ширина квадрата не змінюється й макет не «стрибає». */
+      border: 2px solid transparent;
+    }
+
+    .board:hover .square {
+      border-color: #1d1d1d;
+    }
+
+    /* Правила нижче діють лише тоді, коли ширина вікна НЕ перевищує 600px. */
+    @media (max-width: 600px) {
+      .board {
+        /* Нові значення перекривають ті самі змінні з правила .board вище.
+           Hover продовжує працювати, але вже з мобільним кольором --hover. */
+        --normal: #6d4485;
+        --hover: #d18b25;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .square {
+        /* --n задане кожному елементу в HTML: від 1 до 16.
+           order = 17 - номер. Тому №16 отримує order:1 і стає першим,
+           №15 — order:2, ... №1 — order:16 і стає останнім.
+           Змінюється лише ВІЗУАЛЬНИЙ порядок; HTML залишається 1→16. */
+        order: calc(17 - var(--n));
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- main — основний вміст сторінки. class="board" підключає CSS вище.
+       aria-label дає контейнеру зрозумілу назву для озвучувача. -->
+  <main class="board" aria-label="Šestnásť štvorcov">
+    <!-- Кожен div — один квадрат. style="--n:..." задає його номер для
+         формули order у мобільному @media. Текст між тегами — видима цифра. -->
+    <div class="square" style="--n:1">1</div>
+    <div class="square" style="--n:2">2</div>
+    <div class="square" style="--n:3">3</div>
+    <div class="square" style="--n:4">4</div>
+    <div class="square" style="--n:5">5</div>
+    <div class="square" style="--n:6">6</div>
+    <div class="square" style="--n:7">7</div>
+    <div class="square" style="--n:8">8</div>
+    <div class="square" style="--n:9">9</div>
+    <div class="square" style="--n:10">10</div>
+    <div class="square" style="--n:11">11</div>
+    <div class="square" style="--n:12">12</div>
+    <div class="square" style="--n:13">13</div>
+    <div class="square" style="--n:14">14</div>
+    <div class="square" style="--n:15">15</div>
+    <div class="square" style="--n:16">16</div>
+  </main>
+</body>
+</html>

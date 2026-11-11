@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sources — робочий довідник HTML, CSS, JS</title>
+<style>
+  * { box-sizing: border-box; }
+  body { max-width: 1000px; margin: auto; padding: 16px; font: 16px/1.5 system-ui, sans-serif; color: #111; background: #fff; }
+  h1, h2, h3 { line-height: 1.2; }
+  h2 { border-top: 2px solid #111; padding-top: 1rem; }
+  article { border-top: 1px solid #bbb; padding: 1rem 0; }
+  pre { overflow-x: auto; padding: 12px; border: 1px solid #aaa; background: #f4f4f4; font: 14px/1.45 ui-monospace, monospace; }
+  code { font-family: ui-monospace, monospace; }
+  nav { columns: 2; }
+  nav a { display: block; margin: .25rem 0; }
+  .keywords { color: #444; }
+  .place { font-weight: 700; }
+  a { color: #064b88; }
+  @media (max-width: 650px) { nav { columns: 1; } }
+</style>
+</head>
+<body id="top">
+<h1>Sources: робочий довідник під час пісомки</h1>
+<p>Відкрий цю сторінку поруч із завданням. Шукай через <strong>Cmd+F</strong> дію або ключове слово: «DOMParser», «ціна», «фільтр», «confirm», «hover». У кожному рецепті вказано, куди ставити код. Блоки незалежні: бери лише потрібні й звіряй id/class із наданим HTML.</p>
+<p><a href="./html-parsing-guide.html">Послідовність дій для HTML-парсингу</a> · <a href="#full">цілісний приклад</a> на селекторах із твого <code>cvicenie6/source/kino-hviezda.html</code>. Сам код прикладу наведений нижче; цей файл не мусить лежати поруч із довідником.</p>
+<p><strong>Шлях до джерела:</strong> якщо дані вже в поточній сторінці, використовуй <code>document</code>. Якщо завдання вимагає завантажити HTML, використовуй <code>fetch(location.pathname)</code> для цієї самої сторінки або точну адресу файлу, яку бачиш у завданні. Не вставляй у fetch шлях <code>/public_html/...</code>: це шлях FileZilla, а не браузерна URL-адреса.</p>
+<nav aria-label="Зміст">
+<a href="#map">Як користуватися цією сторінкою</a>
+<a href="#skeleton">Підключення файлів: HTML + CSS + JS</a>
+<a href="#full">Один HTML: повний приклад витягування й показу даних</a>
+<a href="#fetch-html">Завантажити HTML і перевірити HTTP-статус</a>
+<a href="#domparser">Перетворити рядок HTML на документ</a>
+<a href="#selectors">Знайти елемент, усі елементи і текст</a>
+<a href="#clean">Очистити зайві пробіли та нерозривні пробіли</a>
+<a href="#price">Ціна з комою: 8,90 € → число 8.9</a>
+<a href="#heading-small">Взяти день із h2, не захопивши дату в &lt;small&gt;</a>
+<a href="#table-parser">Витягти дані з таблиці HTML</a>
+<a href="#article-parser">Витягти дані з карток article/div</a>
+<a href="#allergens">Алергени з назви: (1, 3, 7)</a>
+<a href="#inspect">Швидко перевірити, що парсер дістав</a>
+<a href="#render-dom">Намалювати картки через createElement і textContent</a>
+<a href="#state">Один стан і повторний render після кожної зміни</a>
+<a href="#day-buttons">Кнопки днів із масиву даних</a>
+<a href="#checkbox">Checkbox: фільтр без втрати стану</a>
+<a href="#search">Пошук за назвою страви</a>
+<a href="#sort">Сортування за ціною, часом або назвою</a>
+<a href="#summary">Кількість, сума і середня ціна видимих записів</a>
+<a href="#empty">Порожній результат, loading і error</a>
+<a href="#refresh">Кнопка оновити дані та захист від подвійного кліку</a>
+<a href="#event-delegation">Один listener для багатьох створених кнопок</a>
+<a href="#confirm">Підтвердження дії: звичайне вікно confirm</a>
+<a href="#dialog">Власне вікно підтвердження через &lt;dialog&gt;</a>
+<a href="#delete">Видалити одну картку за id після підтвердження</a>
+<a href="#form">Форма: додати запис без перезавантаження</a>
+<a href="#storage">Запам’ятати checkbox у localStorage</a>
+<a href="#storage-array">Запам’ятати масив у localStorage через JSON</a>
+<a href="#details">Розкривний блок без JavaScript</a>
+<a href="#json">Коли джерело — JSON замість HTML</a>
+<a href="#parallel">Кілька HTML-джерел: Promise.allSettled</a>
+<a href="#retry">Повторити запит після помилки</a>
+<a href="#proxy">URL для proxy: encodeURIComponent</a>
+<a href="#random">Випадковий запис при завантаженні сторінки</a>
+<a href="#date">Дата і час: показ у словацькому форматі</a>
+<a href="#grid">CSS Grid: картки у 3/2/1 колонці</a>
+<a href="#flex">Flexbox для кнопок і фільтрів</a>
+<a href="#padding-gap">Відступ від рамки: padding ≠ gap</a>
+<a href="#hover">Hover без стрибання макета</a>
+<a href="#inherit">Один hover змінює кольори всіх дітей через CSS-змінну</a>
+<a href="#reverse">Мобільний порядок 16 → 1</a>
+<a href="#focus">Клавіатура: видимий focus</a>
+<a href="#animation">Пауза та відновлення CSS-анімації</a>
+<a href="#debug">DevTools: що перевірити, коли нічого не працює</a>
+<a href="#mistakes">Типові помилки на пісомці</a>
+</nav>
+<h2>Старт</h2>
+<article id="map"><h3>Як знайти потрібний рецепт</h3>
+<p class="keywords"><strong>Пошук:</strong> cmd f пошук рішення HTML CSS JS</p>
+<p class="place">Куди вставити: Це навігаційна примітка.</p>
+<p>1) Прочитай умову. 2) У наданому HTML знайди повторюваний блок. 3) Зі змісту вибери парсер, відображення і потрібну дію. 4) Перевір кожен крок у Console/Network. Не вставляй усі рецепти в один файл: однакові імена змінних конфліктують.</p>
+</article>
+<article id="skeleton"><h3>Підключення файлів: HTML + CSS + JS</h3>
+<p class="keywords"><strong>Пошук:</strong> head defer script link stylesheet viewport локальний сервер</p>
+<p class="place">Куди вставити: У &lt;head&gt; наданого HTML; файли styles.css і script.js поруч із ним.</p>
+<p>defer запускає JS після побудови HTML. fetch локального файлу перевіряй через WebStorm server або Live Server; file:// часто блокується.</p>
+<strong>HTML — &lt;head&gt;</strong><pre><code>&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;
+&lt;script src=&quot;script.js&quot; defer&gt;&lt;/script&gt;</code></pre>
+</article>
+<h2>Парсинг HTML — головне</h2>
+<article id="full"><h3>Один HTML: повний приклад витягування й показу даних</h3>
+<p class="keywords"><strong>Пошук:</strong> один HTML DOMParser fetch location pathname .den .film cvicenie6 повний приклад</p>
+<p class="place">Куди вставити: У script.js, підключений через &lt;script src=&quot;script.js&quot; defer&gt;&lt;/script&gt; до сторінки з даними. Якщо сторінка вже відкрита, для парсингу достатньо document; варіант із fetch показано нижче.</p>
+<p>У твоєму cvicenie6/source/kino-hviezda.html дні мають .den, а сеанси .film. Це конкретний зразок, який у тебе є; на пісомці спочатку заміни селектори на ті, що реально є у виданому HTML. Приклад сам створює #results, тому окремий файл-джерело чи підготовлений контейнер не потрібні.</p>
+<strong>Фрагмент наданого HTML, на який орієнтуються селектори</strong><pre><code>&lt;section class=&quot;den&quot;&gt;
+  &lt;h2&gt;Pondelok &lt;small&gt;2. 11.&lt;/small&gt;&lt;/h2&gt;
+  &lt;ul class=&quot;filmy&quot;&gt;
+  &lt;li class=&quot;film&quot;&gt;
+    &lt;span class=&quot;cas&quot;&gt;17:30&lt;/span&gt;
+    &lt;a class=&quot;nazov&quot;&gt;Robot Ferko zachraňuje svet&lt;/a&gt;
+    &lt;span class=&quot;cena&quot;&gt;5,90 €&lt;/span&gt;
+  &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;</code></pre>
+<strong>script.js — варіант без fetch, якщо дані вже в цій сторінці</strong><pre><code>&quot;use strict&quot;;
+function cleanText(value) {
+  return String(value ?? &quot;&quot;).replace(/\s+/g, &quot; &quot;).trim();
+}
+function priceOf(value) {
+  const match = cleanText(value).replace(&quot;,&quot;, &quot;.&quot;).match(/\d+(?:\.\d+)?/);
+  return match ? Number(match[0]) : null;
+}
+function textOf(parent, selector) {
+  return cleanText(parent.querySelector(selector)?.textContent);
+}
+function parseProgram(doc) {
+  const sections = [...doc.querySelectorAll(&quot;.den&quot;)];
+  if (!sections.length) throw new Error(&quot;Селектор .den нічого не знайшов&quot;);
+  return sections.map(section =&gt; {
+    const heading = section.querySelector(&quot;h2&quot;);
+    const day = cleanText(heading?.firstChild?.textContent);
+    const date = textOf(section, &quot;h2 small&quot;);
+    const films = [...section.querySelectorAll(&quot;.film&quot;)].map(film =&gt; ({
+      time: textOf(film, &quot;.cas&quot;),
+      title: textOf(film, &quot;.nazov&quot;),
+      price: priceOf(textOf(film, &quot;.cena&quot;))
+    })).filter(film =&gt; film.time &amp;&amp; film.title);
+    return { day, date, films };
+  });
+}
+function render(days) {
+  const target = document.querySelector(&quot;#results&quot;) ?? document.body.appendChild(document.createElement(&quot;div&quot;));
+  target.id = &quot;results&quot;;
+  target.replaceChildren();
+  for (const day of days) {
+    const heading = document.createElement(&quot;h2&quot;);
+    heading.textContent = `${day.day} ${day.date}`;
+    target.append(heading);
+    for (const film of day.films) {
+      const row = document.createElement(&quot;p&quot;);
+      const price = film.price === null ? &quot;Cena neuvedená&quot; : `${film.price.toFixed(2)} €`;
+      row.textContent = `${film.time} — ${film.title} — ${price}`;
+      target.append(row);
+    }
+  }
+}
+try {
+  const days = parseProgram(document); // поточний HTML уже є DOM-документом
+  console.table(days.flatMap(d =&gt; d.films.map(f =&gt; ({ day: d.day, ...f }))));
+  render(days);
+} catch (error) {
+  console.error(error); // перевір селектори у виданому HTML
+}</code></pre>
+<strong>Заміна останнього try-блоку, якщо умова вимагає саме fetch + DOMParser</strong><pre><code>async function main() {
+  try {
+    const response = await fetch(location.pathname); // той самий HTML, що відкритий зараз
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const html = await response.text();
+    const doc = new DOMParser().parseFromString(html, &quot;text/html&quot;);
+    const days = parseProgram(doc);
+    console.table(days.flatMap(d =&gt; d.films.map(f =&gt; ({ day: d.day, ...f }))));
+    render(days);
+  } catch (error) {
+    console.error(error);
+  }
+}
+main();</code></pre>
+</article>
+<article id="fetch-html"><h3>Завантажити той самий HTML або точну надану адресу</h3>
+<p class="keywords"><strong>Пошук:</strong> fetch response.ok 404 location.pathname exact URL</p>
+<p class="place">Куди вставити: У script.js. Функція читає поточний HTML; для окремого джерела підстав лише точну адресу з умови.</p>
+<p>Якщо HTML із даними — це поточна сторінка, location.pathname завжди вказує на неї. Якщо викладач дав інший HTML, скопіюй його браузерну адресу або шлях із умови. Перевір HTTP 200 у Network; /public_html — серверний каталог FileZilla, його не пишуть у браузерний fetch.</p>
+<strong>JS</strong><pre><code>async function getCurrentHtml() {
+  const response = await fetch(location.pathname); // той самий HTML
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return await response.text();
+}
+// Усередині іншої async-функції: const html = await getCurrentHtml();</code></pre>
+</article>
+<article id="domparser"><h3>Перетворити отриманий HTML-текст на документ</h3>
+<p class="keywords"><strong>Пошук:</strong> DOMParser parseFromString text/html doc</p>
+<p class="place">Куди вставити: Після response.text() у script.js.</p>
+<p>doc — DOM-копія завантаженого HTML. Якщо дані вже в поточній сторінці й fetch не вимагають, використовуй document напряму й пропусти цей крок.</p>
+<strong>JS</strong><pre><code>const doc = new DOMParser().parseFromString(html, &quot;text/html&quot;);
+console.log(doc.querySelectorAll(&quot;.den&quot;).length); // для прикладу cvicenie6
+// У своєму завданні заміни .den на селектор повторюваного блоку.</code></pre>
+</article>
+<article id="selectors"><h3>Знайти елемент, усі елементи і текст</h3>
+<p class="keywords"><strong>Пошук:</strong> querySelector querySelectorAll textContent optional chaining selector</p>
+<p class="place">Куди вставити: У функції парсингу, на об’єкті doc або всередині конкретної картки.</p>
+<p>querySelector повертає перший елемент або null; querySelectorAll — список. ?. не дає коду впасти, коли поле відсутнє.</p>
+<strong>JS</strong><pre><code>const card = doc.querySelector(&quot;.menu-item&quot;);
+const title = card?.querySelector(&quot;h3&quot;)?.textContent ?? &quot;&quot;;
+const cards = [...doc.querySelectorAll(&quot;.menu-item&quot;)];
+const names = cards.map(item =&gt; item.querySelector(&quot;h3&quot;)?.textContent ?? &quot;&quot;);</code></pre>
+</article>
+<article id="clean"><h3>Очистити зайві пробіли та нерозривні пробіли</h3>
+<p class="keywords"><strong>Пошук:</strong> trim whitespace cleanText nbsp textContent</p>
+<p class="place">Куди вставити: Один раз у script.js; викликай для кожного тексту, який береш із джерела.</p>
+<p>HTML часто має переноси, табуляцію та &amp;nbsp;.   — нерозривний пробіл. Функція перетворює їх на один звичайний пробіл.</p>
+<strong>JS</strong><pre><code>function cleanText(value) {
+  return String(value ?? &quot;&quot;).replace(/\u00a0/g, &quot; &quot;).replace(/\s+/g, &quot; &quot;).trim();
+}
+// &quot;  Kuracie   prsia\n s ryžou &quot; → &quot;Kuracie prsia s ryžou&quot;</code></pre>
+</article>
+<article id="price"><h3>Ціна з комою: 8,90 € → число 8.9</h3>
+<p class="keywords"><strong>Пошук:</strong> price parseFloat Number comma regex eur mena</p>
+<p class="place">Куди вставити: У script.js після cleanText; застосуй до .price або комірки таблиці, якщо це є у виданому HTML.</p>
+<p>match шукає перше число. Якщо його немає, повертаємо null: це відрізняється від ціни 0.</p>
+<strong>JS</strong><pre><code>function parsePrice(text) {
+  const normalized = cleanText(text).replace(&quot;,&quot;, &quot;.&quot;);
+  const match = normalized.match(/\d+(?:\.\d+)?/);
+  return match ? Number(match[0]) : null;
+}
+// parsePrice(&quot;Cena: 8,90 €&quot;) === 8.9</code></pre>
+</article>
+<article id="heading-small"><h3>Взяти день із h2, не захопивши дату в &lt;small&gt;</h3>
+<p class="keywords"><strong>Пошук:</strong> h2 small cloneNode remove day date heading</p>
+<p class="place">Куди вставити: У циклі по групах, якщо заголовок має <code>&lt;small&gt;</code> з датою.</p>
+<p>Якщо взяти h2.textContent напряму, отримаєш &quot;Pondelok 9. 11.&quot;. Копія дозволяє прибрати small, не змінюючи джерело.</p>
+<strong>HTML джерела</strong><pre><code>&lt;h2&gt;Pondelok &lt;small&gt;9. 11. 2026&lt;/small&gt;&lt;/h2&gt;</code></pre>
+<strong>JS</strong><pre><code>const heading = day.querySelector(&quot;h2&quot;).cloneNode(true);
+const date = cleanText(heading.querySelector(&quot;small&quot;)?.textContent);
+heading.querySelector(&quot;small&quot;)?.remove();
+const dayName = cleanText(heading.textContent); // &quot;Pondelok&quot;</code></pre>
+</article>
+<article id="table-parser"><h3>Витягти дані з таблиці HTML</h3>
+<p class="keywords"><strong>Пошук:</strong> table tr td th rows cells DOMParser</p>
+<p class="place">Куди вставити: У функції парсингу, якщо джерело має &lt;table&gt;.</p>
+<p>Пропускай заголовок таблиці та порожні рядки. Порядок td залежить від конкретного наданого HTML.</p>
+<strong>HTML джерела</strong><pre><code>&lt;table&gt;&lt;tr&gt;&lt;th&gt;Jedlo&lt;/th&gt;&lt;th&gt;Cena&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Rezeň&lt;/td&gt;&lt;td&gt;9,10 €&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</code></pre>
+<strong>JS</strong><pre><code>const meals = [...doc.querySelectorAll(&quot;table tr&quot;)].flatMap(row =&gt; {
+  const cells = row.querySelectorAll(&quot;td&quot;);
+  if (cells.length &lt; 2) return []; // заголовок або неповний рядок
+  const title = cleanText(cells[0].textContent);
+  const price = parsePrice(cells[1].textContent);
+  return title &amp;&amp; price !== null ? [{ title, price }] : [];
+});</code></pre>
+</article>
+<article id="article-parser"><h3>Витягти дані з карток article/div</h3>
+<p class="keywords"><strong>Пошук:</strong> article card div menu-item parse cards</p>
+<p class="place">Куди вставити: У функції парсингу, якщо наданий HTML використовує картки замість таблиці.</p>
+<p>Знайди повторюваний блок у DevTools, а потім шукай його внутрішні поля тільки всередині цього блоку.</p>
+<strong>JS</strong><pre><code>const meals = [...doc.querySelectorAll(&quot;.menu-item&quot;)].map(card =&gt; ({
+  title: cleanText(card.querySelector(&quot;.name&quot;)?.textContent),
+  category: cleanText(card.querySelector(&quot;.category&quot;)?.textContent),
+  price: parsePrice(card.querySelector(&quot;.price&quot;)?.textContent)
+})).filter(meal =&gt; meal.title &amp;&amp; meal.price !== null);</code></pre>
+</article>
+<article id="allergens"><h3>Алергени з назви: (1, 3, 7)</h3>
+<p class="keywords"><strong>Пошук:</strong> allergens alergeny regex match split</p>
+<p class="place">Куди вставити: У script.js під час побудови об’єкта страви.</p>
+<p>Зберігай алергени окремо від назви, якщо цього вимагає умова. Якщо їх немає — порожній масив.</p>
+<strong>JS</strong><pre><code>function parseAllergens(text) {
+  const match = cleanText(text).match(/\((\d+(?:\s*,\s*\d+)*)\)/);
+  return match ? match[1].split(&quot;,&quot;).map(x =&gt; x.trim()) : [];
+}
+// &quot;Syr (1, 3, 7)&quot; → [&quot;1&quot;, &quot;3&quot;, &quot;7&quot;]</code></pre>
+</article>
+<article id="inspect"><h3>Швидко перевірити, що парсер дістав</h3>
+<p class="keywords"><strong>Пошук:</strong> console.log console.table debug parser DevTools</p>
+<p class="place">Куди вставити: Тимчасово після парсингу, перед render.</p>
+<p>Якщо сторінка порожня, спочатку дивись на витягнуті дані. Невірний CSS-селектор часто повертає порожній масив без помилки.</p>
+<strong>JS</strong><pre><code>const parsed = parseMenu(doc);
+console.log(&quot;Документ:&quot;, doc);
+console.table(parsed);
+console.log(&quot;Знайдено елементів:&quot;, doc.querySelectorAll(&quot;.meal&quot;).length);</code></pre>
+</article>
+<h2>Відображення та стан</h2>
+<article id="render-dom"><h3>Намалювати картки через createElement і textContent</h3>
+<p class="keywords"><strong>Пошук:</strong> render createElement append replaceChildren textContent xss</p>
+<p class="place">Куди вставити: У функції render() в script.js; у HTML потрібен &lt;div id=&quot;results&quot;&gt;&lt;/div&gt;.</p>
+<p>replaceChildren спочатку прибирає старий результат. textContent показує чужий текст як текст, а не виконує його як HTML.</p>
+<strong>HTML — body</strong><pre><code>&lt;div id=&quot;results&quot;&gt;&lt;/div&gt;</code></pre>
+<strong>JS</strong><pre><code>const results = document.querySelector(&quot;#results&quot;);
+function render(items) {
+  results.replaceChildren();
+  for (const item of items) {
+    const card = document.createElement(&quot;article&quot;);
+    card.className = &quot;card&quot;;
+    const heading = document.createElement(&quot;h2&quot;);
+    heading.textContent = item.title;
+    const price = document.createElement(&quot;p&quot;);
+    price.textContent = item.price === null ? &quot;Cena neuvedená&quot; : `${item.price.toFixed(2)} €`;
+    card.append(heading, price);
+    results.append(card);
+  }
+}</code></pre>
+</article>
+<article id="state"><h3>Один стан і повторний render після кожної зміни</h3>
+<p class="keywords"><strong>Пошук:</strong> state render filter source of truth hidden DOM</p>
+<p class="place">Куди вставити: На верхньому рівні script.js, поза обробниками подій.</p>
+<p>Дані й вибір користувача зберігай у змінних. Не покладайся на hidden старої картки: render може створити її заново.</p>
+<strong>JS</strong><pre><code>let allMeals = [];
+let selectedDay = &quot;Pondelok&quot;;
+let onlyVegetarian = false;
+
+function render() {
+  const visible = allMeals.filter(meal =&gt;
+    meal.day === selectedDay &amp;&amp; (!onlyVegetarian || meal.category === &quot;Bezmäsité&quot;)
+  );
+  renderCards(visible); // твоя функція створення DOM-карток
+}
+// Після fetch: allMeals = parsedMeals; render();
+// Після кліку: selectedDay = &quot;Utorok&quot;; render();</code></pre>
+</article>
+<article id="day-buttons"><h3>Кнопки днів із масиву даних</h3>
+<p class="keywords"><strong>Пошук:</strong> tabs day buttons active addEventListener nav</p>
+<p class="place">Куди вставити: У script.js після завантаження даних; у HTML потрібен &lt;nav id=&quot;days&quot;&gt;&lt;/nav&gt;.</p>
+<p>Не пиши назви днів вручну, якщо вони вже є у джерелі. Set прибирає повтори.</p>
+<strong>JS</strong><pre><code>const dayNames = [...new Set(meals.map(meal =&gt; meal.day))];
+const daysBox = document.querySelector(&quot;#days&quot;);
+for (const day of dayNames) {
+  const button = document.createElement(&quot;button&quot;);
+  button.type = &quot;button&quot;;
+  button.textContent = day;
+  button.addEventListener(&quot;click&quot;, () =&gt; {
+    selectedDay = day;
+    render();
+  });
+  daysBox.append(button);
+}</code></pre>
+</article>
+<article id="checkbox"><h3>Checkbox: фільтр без втрати стану</h3>
+<p class="keywords"><strong>Пошук:</strong> checkbox change checked filter vegetarian only</p>
+<p class="place">Куди вставити: HTML у body; JS після визначення render().</p>
+<p>checked — boolean. Змінюй змінну стану, потім перемальовуй результат.</p>
+<strong>HTML</strong><pre><code>&lt;label&gt;&lt;input id=&quot;only-vegetarian&quot; type=&quot;checkbox&quot;&gt; Iba bezmäsité&lt;/label&gt;</code></pre>
+<strong>JS</strong><pre><code>const checkbox = document.querySelector(&quot;#only-vegetarian&quot;);
+checkbox.addEventListener(&quot;change&quot;, () =&gt; {
+  onlyVegetarian = checkbox.checked;
+  render();
+});</code></pre>
+</article>
+<article id="search"><h3>Пошук за назвою страви</h3>
+<p class="keywords"><strong>Пошук:</strong> search input text filter includes lowercase normalize</p>
+<p class="place">Куди вставити: HTML у body; JS у стані й render().</p>
+<p>toLocaleLowerCase(&quot;sk&quot;) дає пошук без залежності від великих літер. Порожній запит залишає всі записи.</p>
+<strong>HTML</strong><pre><code>&lt;label&gt;Hľadať &lt;input id=&quot;search&quot; type=&quot;search&quot;&gt;&lt;/label&gt;</code></pre>
+<strong>JS</strong><pre><code>let query = &quot;&quot;;
+document.querySelector(&quot;#search&quot;).addEventListener(&quot;input&quot;, event =&gt; {
+  query = event.target.value.trim().toLocaleLowerCase(&quot;sk&quot;);
+  render();
+});
+// Усередині render(), після інших фільтрів:
+const matchesSearch = meal.title.toLocaleLowerCase(&quot;sk&quot;).includes(query);</code></pre>
+</article>
+<article id="sort"><h3>Сортування за ціною, часом або назвою</h3>
+<p class="keywords"><strong>Пошук:</strong> sort price ascending descending localeCompare time</p>
+<p class="place">Куди вставити: У render() після фільтрації, перед створенням DOM.</p>
+<p>sort змінює масив на місці, тому використовуй копію [...visible]. Для часу HH:MM у 24-годинному форматі рядкове порівняння працює.</p>
+<strong>JS</strong><pre><code>const byPrice = [...visible].sort((a, b) =&gt; (a.price ?? Infinity) - (b.price ?? Infinity));
+const byName = [...visible].sort((a, b) =&gt; a.title.localeCompare(b.title, &quot;sk&quot;));
+const byTime = [...visible].sort((a, b) =&gt; a.time.localeCompare(b.time));
+// Відсутня ціна (null) завдяки Infinity опиниться в кінці.</code></pre>
+</article>
+<article id="summary"><h3>Кількість, сума і середня ціна видимих записів</h3>
+<p class="keywords"><strong>Пошук:</strong> count sum average reduce toFixed summary</p>
+<p class="place">Куди вставити: Після фільтрації в render(); у HTML потрібен #summary.</p>
+<p>Порахуй саме visible, якщо показник повинен відповідати поточним фільтрам. Перевір порожній масив перед діленням.</p>
+<strong>JS</strong><pre><code>const count = visible.length;
+const sum = visible.reduce((total, meal) =&gt; total + meal.price, 0);
+const average = count ? (sum / count).toFixed(2) : &quot;0.00&quot;;
+document.querySelector(&quot;#summary&quot;).textContent =
+  `Počet: ${count}, priemerná cena: ${average} €`;</code></pre>
+</article>
+<article id="empty"><h3>Порожній результат, loading і error</h3>
+<p class="keywords"><strong>Пошук:</strong> empty loading error status no results fetch try catch</p>
+<p class="place">Куди вставити: У HTML потрібні #status і #results; у JS передай свої функції завантаження та відображення.</p>
+<p>Розрізняй три випадки: ще завантажується, помилка завантаження і успішно завантажено, але фільтр нічого не знайшов.</p>
+<strong>HTML</strong><pre><code>&lt;p id=&quot;status&quot; role=&quot;status&quot;&gt;Načítava sa…&lt;/p&gt;
+&lt;div id=&quot;results&quot;&gt;&lt;/div&gt;</code></pre>
+<strong>JS</strong><pre><code>async function showLoadState(loadData, render) {
+  const status = document.querySelector(&quot;#status&quot;);
+  const results = document.querySelector(&quot;#results&quot;);
+  status.textContent = &quot;Načítava sa…&quot;;
+  try {
+    const data = await loadData();
+    status.textContent = &quot;&quot;;
+    if (data.length === 0) results.textContent = &quot;Žiadne výsledky.&quot;;
+    else render(data);
+  } catch (error) {
+    console.error(error);
+    status.textContent = &quot;Údaje sa nepodarilo načítať.&quot;;
+  }
+}
+// Передай свої функції: showLoadState(loadMenu, render);</code></pre>
+</article>
+<article id="refresh"><h3>Кнопка оновити дані та захист від подвійного кліку</h3>
+<p class="keywords"><strong>Пошук:</strong> refresh reload button disabled isLoading</p>
+<p class="place">Куди вставити: HTML у body; JS після функції loadAndRender().</p>
+<p>Поки запит триває, кнопку вимкнено. В finally вона знову доступна навіть після помилки.</p>
+<strong>HTML</strong><pre><code>&lt;button id=&quot;refresh&quot; type=&quot;button&quot;&gt;Aktualizovať&lt;/button&gt;</code></pre>
+<strong>JS</strong><pre><code>const refresh = document.querySelector(&quot;#refresh&quot;);
+async function loadAndRender() {
+  refresh.disabled = true;
+  try {
+    allMeals = await loadMenu();
+    render();
+  } catch (error) {
+    console.error(error);
+    status.textContent = &quot;Načítanie zlyhalo.&quot;;
+  } finally {
+    refresh.disabled = false;
+  }
+}
+refresh.addEventListener(&quot;click&quot;, loadAndRender);
+loadAndRender();</code></pre>
+</article>
+<article id="event-delegation"><h3>Один listener для багатьох створених кнопок</h3>
+<p class="keywords"><strong>Пошук:</strong> event delegation data-id closest dynamic buttons</p>
+<p class="place">Куди вставити: У script.js після отримання #results. Кожній створеній кнопці задай data-id.</p>
+<p>Працює і для кнопок, створених після fetch або повторного render. closest шукає кнопку від місця кліку вгору.</p>
+<strong>JS — створення кнопки</strong><pre><code>button.dataset.id = String(item.id);
+button.textContent = &quot;Vybrať&quot;;
+card.append(button);</code></pre>
+<strong>JS — один обробник на контейнері</strong><pre><code>const results = document.querySelector(&quot;#results&quot;);
+results.addEventListener(&quot;click&quot;, event =&gt; {
+  const button = event.target.closest(&quot;button[data-id]&quot;);
+  if (!button || !results.contains(button)) return;
+  const id = Number(button.dataset.id);
+  console.log(&quot;Обрано запис&quot;, id);
+});</code></pre>
+</article>
+<h2>Дії користувача</h2>
+<article id="confirm"><h3>Підтвердження дії: звичайне вікно confirm</h3>
+<p class="keywords"><strong>Пошук:</strong> confirm confirmation potvrdenie modal delete window.confirm</p>
+<p class="place">Куди вставити: HTML-кнопка у body; JS у script.js після DOM. selectedIds тут лише приклад стану — у своїй задачі заміни його власними даними.</p>
+<p>Найшвидший варіант без власної верстки. confirm повертає true після OK і false після Cancel. Спочатку перевір, потім змінюй дані.</p>
+<strong>HTML</strong><pre><code>&lt;button id=&quot;clear&quot; type=&quot;button&quot;&gt;Vymazať výber&lt;/button&gt;
+&lt;p id=&quot;selection-count&quot;&gt;&lt;/p&gt;</code></pre>
+<strong>JS</strong><pre><code>const selectedIds = new Set([1, 2]);
+const count = document.querySelector(&quot;#selection-count&quot;);
+count.textContent = `Vybrané: ${selectedIds.size}`;
+document.querySelector(&quot;#clear&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  if (!window.confirm(&quot;Naozaj vymazať výber?&quot;)) return;
+  selectedIds.clear(); // або інша зміна твого стану
+  count.textContent = `Vybrané: ${selectedIds.size}`;
+});</code></pre>
+</article>
+<article id="dialog"><h3>Власне вікно підтвердження через &lt;dialog&gt;</h3>
+<p class="keywords"><strong>Пошук:</strong> dialog showModal close cancel custom confirm popup</p>
+<p class="place">Куди вставити: HTML в кінці body; CSS у styles.css; JS після DOM або з defer.</p>
+<p>showModal відкриває модальне вікно. Кнопки викликають close; Escape браузер обробляє сам. Дію виконуємо лише після кнопки підтвердження.</p>
+<strong>HTML</strong><pre><code>&lt;button id=&quot;delete-button&quot; type=&quot;button&quot;&gt;Vymazať&lt;/button&gt;
+&lt;dialog id=&quot;confirm-dialog&quot; aria-labelledby=&quot;confirm-title&quot;&gt;
+  &lt;h2 id=&quot;confirm-title&quot;&gt;Potvrdiť vymazanie?&lt;/h2&gt;
+  &lt;button id=&quot;cancel-button&quot; type=&quot;button&quot;&gt;Zrušiť&lt;/button&gt;
+  &lt;button id=&quot;yes-button&quot; type=&quot;button&quot;&gt;Vymazať&lt;/button&gt;
+&lt;/dialog&gt;</code></pre>
+<strong>CSS</strong><pre><code>dialog { border: 1px solid #333; padding: 1rem; max-width: 24rem; }
+dialog::backdrop { background: rgb(0 0 0 / .5); }</code></pre>
+<strong>JS</strong><pre><code>const items = [&quot;Prvá&quot;, &quot;Druhá&quot;]; // приклад стану
+const dialog = document.querySelector(&quot;#confirm-dialog&quot;);
+document.querySelector(&quot;#delete-button&quot;).addEventListener(&quot;click&quot;, () =&gt; dialog.showModal());
+document.querySelector(&quot;#cancel-button&quot;).addEventListener(&quot;click&quot;, () =&gt; dialog.close());
+document.querySelector(&quot;#yes-button&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  items.length = 0; // заміни на потрібну дію після підтвердження
+  dialog.close();
+});</code></pre>
+</article>
+<article id="delete"><h3>Видалити одну картку за id після підтвердження</h3>
+<p class="keywords"><strong>Пошук:</strong> remove delete filter id confirm</p>
+<p class="place">Куди вставити: У click-обробнику, коли маєш id картки; items — масив стану.</p>
+<p>Видаляй зі стану, потім викликай render. Якщо прибрати тільки DOM-елемент, наступний render поверне його.</p>
+<strong>JS</strong><pre><code>function removeItem(id) {
+  if (!window.confirm(&quot;Odstrániť položku?&quot;)) return;
+  items = items.filter(item =&gt; item.id !== id);
+  render();
+}</code></pre>
+</article>
+<article id="form"><h3>Форма: додати запис без перезавантаження</h3>
+<p class="keywords"><strong>Пошук:</strong> form submit preventDefault validation input add item</p>
+<p class="place">Куди вставити: HTML у body; JS після створення масиву items і функції render.</p>
+<p>submit обробляє і клік, і Enter. preventDefault скасовує звичайне оновлення сторінки. Створюй новий об’єкт, а не повторно використовуй об’єкт форми.</p>
+<strong>HTML</strong><pre><code>&lt;form id=&quot;add-form&quot;&gt;
+  &lt;label&gt;Názov &lt;input name=&quot;title&quot; required&gt;&lt;/label&gt;
+  &lt;label&gt;Cena &lt;input name=&quot;price&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;0.01&quot; required&gt;&lt;/label&gt;
+  &lt;button type=&quot;submit&quot;&gt;Pridať&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+<strong>JS</strong><pre><code>const form = document.querySelector(&quot;#add-form&quot;);
+form.addEventListener(&quot;submit&quot;, event =&gt; {
+  event.preventDefault();
+  const values = new FormData(form);
+  const title = String(values.get(&quot;title&quot;) ?? &quot;&quot;).trim();
+  const price = Number(values.get(&quot;price&quot;));
+  if (!title || !Number.isFinite(price) || price &lt; 0) return;
+  items.push({ id: crypto.randomUUID(), title, price });
+  form.reset();
+  render();
+});</code></pre>
+</article>
+<article id="storage"><h3>Запам’ятати checkbox у localStorage</h3>
+<p class="keywords"><strong>Пошук:</strong> localStorage save restore checkbox true false refresh</p>
+<p class="place">Куди вставити: У script.js після отримання checkbox, перед першим render.</p>
+<p>localStorage зберігає рядки. &quot;false&quot; — непорожній рядок, тому Boolean(&quot;false&quot;) дорівнює true. Порівнюй із точним текстом.</p>
+<strong>JS</strong><pre><code>const checkbox = document.querySelector(&quot;#only-vegetarian&quot;);
+checkbox.checked = localStorage.getItem(&quot;only-vegetarian&quot;) === &quot;true&quot;;
+checkbox.addEventListener(&quot;change&quot;, () =&gt; {
+  localStorage.setItem(&quot;only-vegetarian&quot;, String(checkbox.checked));
+  render();
+});</code></pre>
+</article>
+<article id="storage-array"><h3>Запам’ятати масив у localStorage через JSON</h3>
+<p class="keywords"><strong>Пошук:</strong> JSON.stringify JSON.parse localStorage array persist</p>
+<p class="place">Куди вставити: У script.js: читання при старті, запис після зміни масиву.</p>
+<p>localStorage приймає лише текст. JSON.stringify перетворює масив на текст; JSON.parse повертає масив. Не зберігай тут паролі або токени.</p>
+<strong>JS</strong><pre><code>function readSavedItems() {
+  try {
+    const value = JSON.parse(localStorage.getItem(&quot;saved-items&quot;) ?? &quot;[]&quot;);
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
+}
+let savedItems = readSavedItems();
+function saveItems() {
+  localStorage.setItem(&quot;saved-items&quot;, JSON.stringify(savedItems));
+}</code></pre>
+</article>
+<article id="details"><h3>Розкривний блок без JavaScript</h3>
+<p class="keywords"><strong>Пошук:</strong> accordion details summary expand collapse FAQ</p>
+<p class="place">Куди вставити: У HTML body; JS не потрібен.</p>
+<p>Браузер сам відкриває й закриває details після кліку на summary.</p>
+<strong>HTML</strong><pre><code>&lt;details&gt;
+  &lt;summary&gt;Zobraziť podrobnosti&lt;/summary&gt;
+  &lt;p&gt;Ďalšie informácie o jedle.&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+</article>
+<h2>Асинхронні дані</h2>
+<article id="json"><h3>Коли джерело — JSON замість HTML</h3>
+<p class="keywords"><strong>Пошук:</strong> fetch JSON response.json array</p>
+<p class="place">Куди вставити: У script.js, якщо умова дає .json; для HTML використовуй DOMParser, а не цей блок.</p>
+<p>response.json уже перетворює текст на JS-значення. Перевір, чи отримав очікуваний масив.</p>
+<strong>JS</strong><pre><code>async function loadJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const data = await response.json();
+  if (!Array.isArray(data)) throw new Error(&quot;Очікувався масив&quot;);
+  return data;
+}</code></pre>
+</article>
+<article id="parallel"><h3>Кілька джерел: Promise.allSettled</h3>
+<p class="keywords"><strong>Пошук:</strong> parallel Promise.allSettled Promise.all failure 404 multiple files</p>
+<p class="place">Куди вставити: Тільки якщо в умові реально дано кілька адрес HTML.</p>
+<p>Передай функції точні адреси з умови. allSettled поверне результат кожного запиту окремо; невдалий не приховає вдалі.</p>
+<strong>JS</strong><pre><code>async function loadAllSources(sourceUrls) {
+  // Передай сюди ТІЛЬКИ адреси, які реально є в умові.
+  const requests = sourceUrls.map(async url =&gt; {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return new DOMParser().parseFromString(await response.text(), &quot;text/html&quot;);
+  });
+  const outcomes = await Promise.allSettled(requests);
+  outcomes.forEach((outcome, index) =&gt; {
+    if (outcome.status === &quot;fulfilled&quot;) console.log(sourceUrls[index], outcome.value);
+    else console.error(sourceUrls[index], outcome.reason);
+  });
+  return outcomes;
+}
+// Виклик: loadAllSources(адресиЗУмови);</code></pre>
+</article>
+<article id="retry"><h3>Повторити запит із тієї самої перевіреної адреси</h3>
+<p class="keywords"><strong>Пошук:</strong> retry button fetch error</p>
+<p class="place">Куди вставити: У script.js після функцій парсингу/показу; #retry і #status мають бути в HTML.</p>
+<p>Перш ніж додавати retry, переконайся, що sourceUrl дійсно існує у твоєму завданні. У цьому прикладі повторно читається поточний HTML.</p>
+<strong>HTML</strong><pre><code>&lt;button id=&quot;retry&quot; type=&quot;button&quot;&gt;Skúsiť znova&lt;/button&gt;
+&lt;p id=&quot;status&quot; role=&quot;status&quot;&gt;&lt;/p&gt;</code></pre>
+<strong>JS</strong><pre><code>const retry = document.querySelector(&quot;#retry&quot;);
+const status = document.querySelector(&quot;#status&quot;);
+retry.addEventListener(&quot;click&quot;, async () =&gt; {
+  retry.disabled = true;
+  status.textContent = &quot;Načítava sa…&quot;;
+  try {
+    const response = await fetch(location.pathname);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const doc = new DOMParser().parseFromString(await response.text(), &quot;text/html&quot;);
+    render(parseProgram(doc)); // використай свої функції та селектори
+    status.textContent = &quot;&quot;;
+  } catch (error) {
+    console.error(error);
+    status.textContent = &quot;Načítanie zlyhalo.&quot;;
+  } finally {
+    retry.disabled = false;
+  }
+});</code></pre>
+</article>
+<article id="proxy"><h3>Proxy: лише якщо адресу надано в умові</h3>
+<p class="keywords"><strong>Пошук:</strong> proxy encodeURIComponent URL CORS</p>
+<p class="place">Куди вставити: Використовуй тільки коли викладач справді дав proxy й окрему адресу джерела.</p>
+<p>Під час роботи без інтернету цей блок зазвичай не потрібен. Не вигадуй proxy URL. URLSearchParams сам закодує адресу джерела як один параметр.</p>
+<strong>JS</strong><pre><code>// proxyBase і sourceUrl мають походити з умови:
+const proxy = new URL(proxyBase);
+proxy.searchParams.set(&quot;url&quot;, sourceUrl);
+const response = await fetch(proxy);</code></pre>
+</article>
+<article id="random"><h3>Випадковий запис при завантаженні сторінки</h3>
+<p class="keywords"><strong>Пошук:</strong> Math.random Math.floor random refresh ChoPin</p>
+<p class="place">Куди вставити: Після парсингу масиву, перед render. Не викликай у кожному render, якщо вибір має лишатися сталим до F5.</p>
+<p>Math.random дає [0,1). Після множення на довжину і округлення вниз індекс лежить від 0 до length-1.</p>
+<strong>JS</strong><pre><code>const chosen = items[Math.floor(Math.random() * items.length)];
+// Перед цим перевір: if (!items.length) { ... }</code></pre>
+</article>
+<article id="date"><h3>Дата і час: показ у словацькому форматі</h3>
+<p class="keywords"><strong>Пошук:</strong> Date Intl toLocaleString sk-SK updatedAt timestamp</p>
+<p class="place">Куди вставити: Після успішного завантаження або в підписі картки.</p>
+<p>Створюй Date у момент успіху. Не переписуй його при помилці, якщо потрібен час останнього успішного оновлення.</p>
+<strong>JS</strong><pre><code>const updatedAt = new Date();
+const label = updatedAt.toLocaleString(&quot;sk-SK&quot;, {
+  day: &quot;2-digit&quot;, month: &quot;2-digit&quot;, year: &quot;numeric&quot;,
+  hour: &quot;2-digit&quot;, minute: &quot;2-digit&quot;
+});
+status.textContent = `Aktualizované: ${label}`;</code></pre>
+</article>
+<h2>CSS та адаптивність</h2>
+<article id="grid"><h3>CSS Grid: картки у 3/2/1 колонці</h3>
+<p class="keywords"><strong>Пошук:</strong> CSS grid repeat minmax gap media responsive mobile</p>
+<p class="place">Куди вставити: У styles.css; на контейнері class=&quot;cards&quot;.</p>
+<p>Grid розкладає картки. gap — проміжок між ними. minmax(0,1fr) не дає довгому вмісту розширити колонку.</p>
+<strong>HTML</strong><pre><code>&lt;div class=&quot;cards&quot; id=&quot;results&quot;&gt;&lt;/div&gt;</code></pre>
+<strong>CSS</strong><pre><code>* { box-sizing: border-box; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 900px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }</code></pre>
+</article>
+<article id="flex"><h3>Flexbox для кнопок і фільтрів</h3>
+<p class="keywords"><strong>Пошук:</strong> flex display flex gap wrap alignment</p>
+<p class="place">Куди вставити: У styles.css на контейнері кнопок.</p>
+<p>flex-wrap дозволяє кнопкам перейти на наступний рядок на вузькому екрані.</p>
+<strong>CSS</strong><pre><code>.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .75rem;
+}</code></pre>
+</article>
+<article id="padding-gap"><h3>Відступ від рамки: padding ≠ gap</h3>
+<p class="keywords"><strong>Пошук:</strong> padding gap border box-sizing 25px RuFus</p>
+<p class="place">Куди вставити: У styles.css на контейнері квадратів або карток.</p>
+<p>padding відділяє дітей від ВНУТРІШНЬОГО краю рамки. gap задає відстань лише МІЖ дітьми.</p>
+<strong>CSS</strong><pre><code>.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid #222;
+  padding: 25px; /* від рамки до квадратів */
+  gap: 12px;     /* між квадратами */
+}</code></pre>
+</article>
+<article id="hover"><h3>Hover без стрибання макета</h3>
+<p class="keywords"><strong>Пошук:</strong> hover border layout shift color inheritance CSS variable</p>
+<p class="place">Куди вставити: У styles.css; елемент class=&quot;card&quot;.</p>
+<p>Не додавай товщину рамки лише при hover. Задай її від початку і міняй колір або фон.</p>
+<strong>CSS</strong><pre><code>.card { border: 2px solid transparent; background: white; }
+.card:hover { border-color: #345; background: #eef4f6; }
+/* Ширина рамки до і після hover однакова. */</code></pre>
+</article>
+<article id="inherit"><h3>Один hover змінює кольори всіх дітей через CSS-змінну</h3>
+<p class="keywords"><strong>Пошук:</strong> CSS inheritance custom property var parent hover children</p>
+<p class="place">Куди вставити: У styles.css, коли умова вимагає наслідування CSS.</p>
+<p>Змінна --tile-color визначена на батьку й успадковується плитками. На hover батько міняє її один раз.</p>
+<strong>CSS</strong><pre><code>.board { --tile-color: #246; }
+.board:hover { --tile-color: #c53; }
+.tile { background: var(--tile-color); }
+@media (max-width: 600px) {
+  .board { --tile-color: #735; }
+  .board:hover { --tile-color: #db9; }
+}</code></pre>
+</article>
+<article id="reverse"><h3>Мобільний порядок 16 → 1</h3>
+<p class="keywords"><strong>Пошук:</strong> order calc reverse mobile grid flex RuFus</p>
+<p class="place">Куди вставити: У styles.css; у кожної плитки в HTML style=&quot;--n:номер&quot;.</p>
+<p>Для 16 елементів order = 17 - n. №16 отримає 1 і стане першим. Змінюється візуальний порядок, не порядок у DOM.</p>
+<strong>HTML — зразок двох елементів</strong><pre><code>&lt;div class=&quot;tile&quot; style=&quot;--n:1&quot;&gt;1&lt;/div&gt;
+&lt;div class=&quot;tile&quot; style=&quot;--n:16&quot;&gt;16&lt;/div&gt;</code></pre>
+<strong>CSS</strong><pre><code>@media (max-width: 600px) {
+  .tile { order: calc(17 - var(--n)); }
+}</code></pre>
+</article>
+<article id="focus"><h3>Клавіатура: видимий focus</h3>
+<p class="keywords"><strong>Пошук:</strong> focus-visible keyboard Tab outline accessibility</p>
+<p class="place">Куди вставити: У styles.css для кнопок і полів.</p>
+<p>Після Tab має бути видно поточний елемент. Не прибирай outline без заміни.</p>
+<strong>CSS</strong><pre><code>button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid #a53;
+  outline-offset: 2px;
+}</code></pre>
+</article>
+<article id="animation"><h3>Пауза та відновлення CSS-анімації</h3>
+<p class="keywords"><strong>Пошук:</strong> animation play state paused running toggle ChoPin</p>
+<p class="place">Куди вставити: CSS у styles.css, JS у script.js, кнопка в HTML.</p>
+<p>Анімація задана .tile, тому animation-play-state змінюємо теж на .tile. toggle робить дію повторюваною.</p>
+<strong>HTML</strong><pre><code>&lt;button id=&quot;pause&quot; type=&quot;button&quot;&gt;Pauza / pokračovať&lt;/button&gt;
+&lt;div id=&quot;board&quot;&gt;&lt;div class=&quot;tile&quot;&gt;&lt;/div&gt;&lt;/div&gt;</code></pre>
+<strong>CSS</strong><pre><code>.tile { animation: pulse 1s infinite alternate; }
+#board.paused .tile { animation-play-state: paused; }
+@keyframes pulse { from { opacity: .3; } to { opacity: 1; } }</code></pre>
+<strong>JS</strong><pre><code>document.querySelector(&quot;#pause&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  document.querySelector(&quot;#board&quot;).classList.toggle(&quot;paused&quot;);
+});</code></pre>
+</article>
+<h2>Перевірка</h2>
+<article id="debug"><h3>DevTools: що перевірити, коли нічого не працює</h3>
+<p class="keywords"><strong>Пошук:</strong> F12 Console Network Elements 404 error selectors breakpoint</p>
+<p class="place">Куди вставити: Відкрий DevTools у браузері.</p>
+<p>Console: синтаксична помилка або null. Network: чи завантажився HTML (200), CSS і JS. Elements: чи існує елемент і чи правильний селектор. Якщо fetch 404 — перевір шлях від сторінки; якщо fetch блокується — запусти локальний сервер.</p>
+<strong>JS — тимчасові перевірки</strong><pre><code>console.log(&quot;script started&quot;);
+console.log(&quot;source element:&quot;, doc.querySelector(&quot;#source-menu&quot;));
+console.log(&quot;days:&quot;, doc.querySelectorAll(&quot;.day&quot;).length);
+console.table(parsedMeals);</code></pre>
+</article>
+<article id="mistakes"><h3>Типові помилки на пісомці</h3>
+<p class="keywords"><strong>Пошук:</strong> mistakes errors addEventListener parentheses innerHTML index loop</p>
+<p class="place">Куди вставити: Переглянь перед здачею.</p>
+<p>1. addEventListener(&quot;click&quot;, render()) викликає render одразу; пиши render. 2. for (i &lt;= items.length) заходить за кінець масиву; пиши i &lt; items.length. 3. querySelector без ?. може повернути null. 4. classList.add ставить клас один раз; для перемикання використовуй toggle. 5. Чужий текст вставляй через textContent, не innerHTML.</p>
+</article>
+<p><a href="#top">На початок</a></p></body></html>

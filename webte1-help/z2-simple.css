@@ -1,0 +1,13 @@
+/* Цей файл стилізує тільки сторінку z2-simple.html. */
+* { box-sizing: border-box; }
+body { max-width: 850px; margin: auto; padding: 16px; font: 16px/1.5 system-ui, sans-serif; }
+a { color: #064b88; }
+nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+button { padding: 8px 12px; border: 1px solid #555; background: white; cursor: pointer; }
+button[aria-pressed="true"] { background: #dceaf0; font-weight: bold; }
+#menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.dish { border: 1px solid #888; padding: 12px; }
+.dish h3, .dish p { margin: 0 0 6px; }
+.dish p:last-child { margin-bottom: 0; }
+pre { overflow-x: auto; padding: 10px; border: 1px solid #aaa; background: #f5f5f5; }
+@media (max-width: 600px) { #menu { grid-template-columns: 1fr; } }

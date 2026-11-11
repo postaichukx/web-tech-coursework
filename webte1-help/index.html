@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="data:,">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WEBTE1 — робочі інструкції</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { max-width: 900px; margin: auto; padding: 16px; font: 16px/1.55 system-ui, sans-serif; color: #111; background: white; }
+    h1, h2 { line-height: 1.2; }
+    section { border-top: 1px solid #aaa; padding: 1rem 0; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #aaa; padding: .5rem; text-align: left; vertical-align: top; }
+    pre { overflow-x: auto; padding: 12px; border: 1px solid #aaa; background: #f5f5f5; font: 14px/1.45 ui-monospace, monospace; }
+    code { font-family: ui-monospace, monospace; }
+    a { color: #064b88; }
+  </style>
+</head>
+<body>
+  <h1>WEBTE1 — робочі інструкції під час пісомки</h1>
+  <p>Відкрий цей файл разом із умовою. Почни з наданого HTML, потім шукай потрібну дію через Cmd+F у <a href="./sources.html">Sources: готові блоки коду</a>. Якщо завдання стосується витягування даних, йди за <a href="./html-parsing-guide.html">порядком HTML-парсингу</a> або відкрий <a href="./z2-simple.html">простий робочий приклад Z2 Eat &amp; Meet</a>. Усе працює без зовнішніх бібліотек і шрифтів.</p>
+
+  <section>
+    <h2>Перші 5 хвилин</h2>
+    <ol>
+      <li>Прочитай умову й познач: які дані витягти, що показати, які кнопки/фільтри, що має змінюватися на мобільному.</li>
+      <li>Відкрий виданий HTML. Знайди повторюваний зовнішній блок і поля всередині нього. Запиши точні селектори.</li>
+      <li>Визнач джерело: дані в поточному документі → <code>document</code>; потрібно завантажити HTML → <code>fetch</code> за реальною URL-адресою.</li>
+      <li>Перевір у Console кількість знайдених блоків. Якщо 0 — виправ селектор до написання решти коду.</li>
+      <li>Спочатку зроби масив об’єктів і <code>console.table</code>. Тільки після цього пиши відображення та CSS.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Який шлях використовувати</h2>
+    <p>На твоєму скрині FileZilla видно <code>/public_html</code> із папками <code>Z2_postaichuk</code> та <code>cvicenie2</code>–<code>cvicenie8</code>. Це <strong>шлях на сервері</strong>. Браузер і <code>fetch</code> працюють із URL-адресами. Не пиши у коді <code>fetch("/public_html/...")</code>.</p>
+    <table>
+      <tr><th>Що реально дали</th><th>Дія</th></tr>
+      <tr><td>Дані вже в цьому HTML</td><td><code>const doc = document;</code> — можна відразу шукати елементи.</td></tr>
+      <tr><td>Потрібно завантажити цей самий HTML, як у Z2</td><td><code>fetch(location.pathname)</code>, потім <code>response.text()</code> і <code>DOMParser</code>.</td></tr>
+      <tr><td>Дали окремий HTML-файл</td><td>Візьми його <strong>точну браузерну адресу</strong> з умови або відкрий файл у браузері й скопіюй URL. Перевір HTTP 200 у Network.</td></tr>
+    </table>
+    <p>Якщо відкрив сторінку через <code>file://</code> і <code>fetch</code> не працює, запусти її через локальний сервер WebStorm або шкільний сервер. Для локального HTML інтернет не потрібен.</p>
+  </section>
+
+  <section>
+    <h2>Знайди потрібний блок</h2>
+    <table>
+      <tr><th>Потреба</th><th>Де шукати</th></tr>
+      <tr><td>Завантажити й розібрати HTML</td><td><a href="./html-parsing-guide.html">Порядок дій</a> · <a href="./sources.html#full">цілісний приклад</a></td></tr>
+      <tr><td>Побачити простий Z2-приклад із HTML-джерелом</td><td><a href="./z2-simple.html">Eat &amp; Meet: сторінка, JS, CSS і джерело</a></td></tr>
+      <tr><td>Інша структура HTML: таблиця або картки</td><td><a href="./sources.html#table-parser">Таблиця</a> · <a href="./sources.html#article-parser">Картки</a></td></tr>
+      <tr><td>Ціна, пробіли, відсутнє поле</td><td><a href="./sources.html#clean">Очищення тексту</a> · <a href="./sources.html#price">Ціна</a></td></tr>
+      <tr><td>Показати записи та фільтрувати</td><td><a href="./sources.html#render-dom">Створення DOM</a> · <a href="./sources.html#state">Стан</a> · <a href="./sources.html#checkbox">Checkbox</a></td></tr>
+      <tr><td>Підтвердити дію</td><td><a href="./sources.html#confirm">Звичайний confirm</a> · <a href="./sources.html#dialog">Власне вікно dialog</a></td></tr>
+      <tr><td>Мобільна версія, hover, порядок</td><td><a href="./sources.html#grid">Grid</a> · <a href="./sources.html#hover">Hover</a> · <a href="./sources.html#reverse">Зворотний порядок</a></td></tr>
+      <tr><td>Помилка, порожній результат, оновлення</td><td><a href="./sources.html#empty">Стани</a> · <a href="./sources.html#refresh">Оновлення</a> · <a href="./sources.html#debug">Діагностика</a></td></tr>
+      <tr><td>Оригінальні умови ChoPin і Rufus</td><td><a href="./zadanie-chopin.png">ChoPin</a> · <a href="./zadanie-rufus.png">Rufus</a></td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Як тримати довідник доступним на шкільному сервері</h2>
+    <p>У FileZilla передай усю папку <code>webte1-help</code> в окрему папку всередині <code>/public_html</code>, яку можеш створити або до якої маєш доступ. Збережи файли разом і відкривай <code>index.html</code> через браузер; тоді посилання й Z2-приклад працюватимуть. Не клади довідник усередину <code>cvicenie8/dist</code>, щоб не змішувати його зі збіркою вправи.</p>
+    <p>Відкрий сторінку через браузер і перевір посилання на Sources та гайд. Файли довідника не завантажують нічого з інтернету.</p>
+  </section>
+
+  <section>
+    <h2>Перед здачею</h2>
+    <ul>
+      <li>У Console немає несподіваних помилок; Network показує правильні URL і HTTP-статуси.</li>
+      <li>Перевірені всі кнопки й фільтри, порожній стан та повторне натискання.</li>
+      <li>На ширині близько 375 px немає горизонтальної прокрутки.</li>
+      <li>Усі підключені CSS/JS-файли лежать там, де їх шукає HTML. Немає CDN або залежності від інтернету.</li>
+    </ul>
+  </section>
+
+  <p>Додаткові автономні приклади коду: <a href="./rufus.html">Grid, hover і мобільний порядок</a> · <a href="./chopin.html">JSON та пауза анімації</a>. Вони ілюструють окремі механіки; актуальні селектори та вимоги завжди бери з виданого завдання.</p>
+</body>
+</html>
